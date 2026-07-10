@@ -28,7 +28,7 @@ export const manifest: EngineManifest = {
     },
     {
       key: 'settings',
-      mountPath: '/data/settings.ini',
+      mountPath: '/data/Settings.ini',
       required: false,
       accept: ['.ini'],
       description:
