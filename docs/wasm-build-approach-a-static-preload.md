@@ -7,6 +7,15 @@ Builds on the [shared core](wasm-build-shared-core.md) (sources, vendored deps,
 engine patches, CMake invocation, memory flags) — read that first. The other
 option is [Approach B](wasm-build-approach-b-sdk-contract.md).
 
+## Status (2026-07-11): IMPLEMENTED AND VERIFIED
+
+Built with emsdk 6.0.2 (Docker): artifact sizes match the proven build
+(`rsdkv5.wasm` 4,847,949 B vs reference 4,847,861 B; `rsdkv5.data` byte-count
+identical). Driven in headless Chromium via the rewritten demo: engine boots and
+the Sonic Mania developer splash renders with zero console errors. Verified to
+the splash screen — menus/gameplay were proven on the reference build, not
+re-driven here.
+
 ## `platforms/Emscripten.cmake` (as in the reference)
 
 ```cmake
