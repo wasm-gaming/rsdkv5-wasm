@@ -27,6 +27,17 @@ target_link_options(RetroEngine PRIVATE
 - `INVOKE_RUN=0` + exported `callMain` so the SDK can write files **before** boot.
 - No `.data` artifact — only `rsdkv5.{js,wasm}`, matching the current manifest.
 
+## Status (2026-07-11): IMPLEMENTED AND VERIFIED
+
+Built with emsdk 6.0.2 (Docker) and driven in headless Chromium: `createRSDKv5()`
+factory boots, the SDK runtime-mounts Data.rsdk + Settings.ini under
+`/data/<ns>/` + `FS.chdir`, `callMain([])` starts the engine, and the Sonic Mania
+developer splash renders with zero console errors. Risks 1–4 below are resolved
+(CWD-relative `dataFile=` works; capital-S `Settings.ini` + v5 INI dialect fixed
+in the SDK; no `UsingCWD`; MODULARIZE/EXPORT_ES6/INVOKE_RUN=0 coexist with
+`emscripten_set_main_loop`). Risk 5 (dev-menu bridge) remains a guarded no-op.
+Verified to the splash screen — menus/gameplay not yet driven on this variant.
+
 ## Open risks to resolve on this branch (verify with a real build)
 
 1. **Where does the engine read data?** The reference preloads `Data.rsdk` +
