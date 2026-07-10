@@ -34,6 +34,25 @@ Two facts drove the whole design:
 > itself still has Mania compiled in. A truly game-agnostic engine `.wasm` would
 > require the finished side-module path, which is out of scope until that exists.
 
+## Base repos + toolchain (both approaches)
+
+| Repo | Role | Pin |
+|---|---|---|
+| [RSDKModding/Sonic-Mania-Decompilation](https://github.com/RSDKModding/Sonic-Mania-Decompilation) | Primary clone — game code; vendors the engine as a submodule at `dependencies/RSDKv5` | `9dc69942…` |
+| [RSDKModding/RSDKv5-Decompilation](https://github.com/RSDKModding/RSDKv5-Decompilation) | The engine (RSDKv5U). Arrives via `submodule update --init --recursive`, never cloned directly | via the Mania pin |
+| [xiph/ogg](https://github.com/xiph/ogg) | Vendored source (no system package under Emscripten) | `06a5e026…` |
+| [xiph/theora](https://github.com/xiph/theora) | Vendored source — cutscene playback (`Video.cpp`) | `28fd5ec7…` |
+
+(RSDKModding is the successor org to Rubberduckycooly's original repos. The
+`Jdsle/RSDKv5-Decompilation@web` / RSDK-Library fork — MAIN_MODULE + pthreads +
+`Game.wasm` side module — was investigated and **rejected**: no finished public
+`Game.wasm` exists.)
+
+**Toolchain:** the proven build (2026-07-05) used `emscripten/emsdk:latest`,
+which at that date was **Emscripten 6.0.2** (image `644883f58ca1`, created
+2026-07-01). Pin `EMSDK_IMAGE` to that rather than `latest` — emsdk updates have
+broken flag combinations before.
+
 ## Source + pinned deps
 
 ```sh
@@ -94,6 +113,12 @@ docker run --rm -v "$WORK_DIR:/workspace" -w /workspace emscripten/emsdk:latest 
 
 Artifacts land at `build/dependencies/RSDKv5/RSDKv5U.{js,wasm[,data]}`.
 
+`-DGAME_STATIC=ON` must be **explicit**: the top-level CMakeLists only forces it
+ON for non-Windows/non-Unix platforms, and Emscripten's toolchain sets `UNIX=1` —
+left alone it defaults OFF, building the game as a separate shared library that
+`RetroEngine` would `dlopen` at runtime (Emscripten dynamic linking, exactly what
+we're avoiding).
+
 ## Memory flags (shared, learned the hard way)
 
 - `-sTOTAL_MEMORY=536870912` (512 MB), `-sSTACK_SIZE=5242880`.
@@ -104,6 +129,22 @@ Artifacts land at `build/dependencies/RSDKv5/RSDKv5U.{js,wasm[,data]}`.
 - Repeat `-O3` on the **link** line — `CMAKE_BUILD_TYPE=Release` only optimizes
   compile lines; emcc's link stage (wasm-opt + JS-glue minify) is `-O0` otherwise.
 - `-sFORCE_FILESYSTEM=1`.
+
+## Provenance: how "proven" was established
+
+The reference recipe was verified on 2026-07-05 (play.germade sessions
+`2026-07-05_05h00.sonic-mania-integration` and `…_20h00.sonic-mania-perf-fpcast`):
+clean Docker build from a **fresh clone**, then headless Chromium driven from
+boot → menus → **Studiopolis Zone gameplay** with sustained input, plus attract
+demo and pause — past the exact point earlier builds trapped. Joshua also played
+it by hand. Final `.wasm` is ~4.85 MB (dropping fpcast-emu shrank it 23%).
+
+Known **unverified** areas (carry over to both branches):
+- Theora cutscene playback (compiled in, never exercised).
+- Real gamepad hardware (the shared `game-input.js` gamepad→keyboard translator
+  with `window.__gamepadKeyMap = 'rsdkv5'` passed synthetic-pad tests only; the
+  key map matches `defaultKeyMaps` in `RSDKv5/RSDK/User/Core/UserCore.cpp`).
+- Memory headroom of the fixed 512 MB heap across larger/later levels.
 
 ## Verification (both branches)
 
