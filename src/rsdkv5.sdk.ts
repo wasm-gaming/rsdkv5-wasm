@@ -3,8 +3,12 @@
 // Conforms to the wasm-gaming engine contract (github.com/wasm-gaming/engine-specs):
 // exports `manifest` (declarative) and `load(config)` (imperative).
 
-// Sonic Mania is built as RSDKv5U. The engine binary is game-agnostic at this
-// layer; `Data.rsdk` and `settings.ini` are mounted at runtime into the FS.
+// Sonic Mania is built as RSDKv5U (compiled statically into the engine — see
+// docs/wasm-build-approach-b-sdk-contract.md). The SDK surface is game-agnostic:
+// `Data.rsdk` and `Settings.ini` are mounted at runtime into the FS, then main()
+// is started via callMain(). NOTE the capital S: the v5 engine reads
+// "Settings.ini" (case-sensitive under the Emscripten FS), unlike v4's
+// settings.ini.
 
 import type { EngineConfig, EngineInstance, AssetData } from '@wasm-gaming/engine-specs';
 import { manifest } from './rsdkv5.manifest.js';
@@ -15,37 +19,42 @@ export { manifest };
 const WORK_ROOT = '/data';
 const DEFAULT_STORAGE_NAMESPACE = 'default';
 
-/** Serialize engine options into Sonic Mania's settings.ini format. */
+/**
+ * Serialize engine options into RSDKv5U's Settings.ini format. This is the v5
+ * dialect (lowercase keys, 0/1 booleans, `dataFile=` in [Game]) — matching the
+ * exact file the proven build preloaded — NOT v4's [Dev]/CamelCase format.
+ * `dataFile=Data.rsdk` is load-bearing: it names the pack the engine opens,
+ * relative to CWD (the SDK chdir()s into the working dir before callMain).
+ */
 function buildSettingsIni(options: Rsdkv5Options = {}): string {
   const o = { ...DEFAULT_RSDKV5_OPTIONS, ...options };
+  const b = (v: boolean) => (v ? '1' : '0');
   return [
-    '[Dev]',
-    `EngineDebugMode=${o.engineDebugMode ? 'true' : 'false'}`,
-    `DevMenu=${o.devMenu ? 'true' : 'false'}`,
-    '',
     '[Game]',
-    `Language=${o.language | 0}`,
-    `Region=${o.region | 0}`,
+    'dataFile=Data.rsdk',
+    `devMenu=${b(o.devMenu)}`,
+    `language=${o.language | 0}`,
+    `region=${o.region | 0}`,
     '',
     '[Video]',
-    'Windowed=true',
-    'Border=true',
-    'ExclusiveFS=false',
-    `VSync=${o.vsync ? 'true' : 'false'}`,
-    'TripleBuffering=false',
-    'PixWidth=424',
-    'WinWidth=424',
-    'WinHeight=240',
-    'FSWidth=0',
-    'FSHeight=0',
-    'RefreshRate=60',
-    'ShaderSupport=false',
-    'ScreenShader=false',
+    'windowed=1',
+    'border=1',
+    'exclusiveFS=0',
+    `vsync=${b(o.vsync)}`,
+    'tripleBuffering=0',
+    'pixWidth=424',
+    'winWidth=424',
+    'winHeight=240',
+    'fsWidth=0',
+    'fsHeight=0',
+    'refreshRate=60',
+    'shaderSupport=0',
+    'screenShader=0',
     '',
     '[Audio]',
-    'StreamsEnabled=true',
-    'StreamVolume=0.8',
-    'SfxVolume=1.0',
+    'streamsEnabled=1',
+    'streamVolume=0.8',
+    'sfxVolume=1.0',
     '',
   ].join('\n');
 }
@@ -179,7 +188,9 @@ export async function load(config: Rsdkv5LoadConfig): Promise<Rsdkv5Instance> {
   const storageNamespace = normalizeStorageNamespace(config.storageNamespace);
   const { persistent, workDir } = mountWorkingDir(Module, storageNamespace);
   const dataPath = `${workDir}/Data.rsdk`;
-  const settingsPath = `${workDir}/settings.ini`;
+  // Capital S: RSDKv5U opens "Settings.ini" and the Emscripten FS is
+  // case-sensitive (v4 used lowercase settings.ini — do not copy that here).
+  const settingsPath = `${workDir}/Settings.ini`;
 
   // Data.rsdk — precedence: explicit asset > lazy provider > existing file.
   let dataBytes = toUint8(assets?.data);
@@ -227,7 +238,9 @@ export async function load(config: Rsdkv5LoadConfig): Promise<Rsdkv5Instance> {
     setPaused,
   };
 
-  Module.callMain(['UsingCWD']);
+  // No 'UsingCWD' argv — that's a v4-ism; v5U's main() doesn't parse it. The
+  // engine resolves Settings.ini/dataFile relative to the FS CWD set above.
+  Module.callMain([]);
   emit({ type: 'ready' });
 
   return {

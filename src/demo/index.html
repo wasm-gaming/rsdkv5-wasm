@@ -55,6 +55,19 @@
     <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
   </div>
 
+  <!-- Data.rsdk pick / drag-and-drop fallback (demo.js drives it; hidden once
+       the engine boots). These ids are load-bearing: demo.ts queries them. -->
+  <div id="picker" style="position:absolute;left:0;right:0;bottom:1.5rem;margin:0 auto;
+       max-width:40rem;text-align:center;color:#eee;font:14px system-ui;
+       background:#000a;padding:1rem;border-radius:.5rem;">
+    <p id="status">Looking for Data.rsdk…</p>
+    <input id="file" type="file" accept=".rsdk" hidden>
+  </div>
+  <style>
+    #picker.hidden { display: none; }
+    #picker.dragover { outline: 2px dashed #6cf; }
+  </style>
+
   <script type="module" src="./demo.js"></script>
 </body>
 

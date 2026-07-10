@@ -39,15 +39,7 @@ jobs:
           name: sdk-dist
           path: dist/
 
-  # The WASM build is not wired up on main yet (scripts/build.sh is a stub that
-  # exits 1 by design — see docs/wasm-build-approaches.md; the two candidate
-  # implementations live on the approach-a-static-preload / approach-b-sdk-contract
-  # branches). Gate the wasm job on the RSDKV5_WASM_ENABLED repository variable so
-  # runs show SKIPPED instead of failing on every push; flip it to 'true' (or just
-  # drop the gate) when an approach merges. Secrets can't be used in job-level
-  # `if`, variables can.
   wasm:
-    if: vars.RSDKV5_WASM_ENABLED == 'true'
     runs-on: ubuntu-latest
     # Pinned to the toolchain the proven recipe was verified with (see
     # docs/wasm-build-shared-core.md), not :latest.
