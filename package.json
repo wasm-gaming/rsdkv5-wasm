@@ -26,6 +26,8 @@
   },
   "files": [
     "dist/rsdkv5/",
+    "!dist/rsdkv5/*.data",
+    "!dist/rsdkv5/*.rsdk",
     "dist/manifest.json",
     "src/rsdkv5.manifest.ts",
     "src/rsdkv5.options.ts",
