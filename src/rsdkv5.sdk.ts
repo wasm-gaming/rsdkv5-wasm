@@ -1,122 +1,27 @@
-// @wasm-gaming/rsdkv5-wasm — SDK entry point.
+// @wasm-gaming/rsdkv5-wasm — SDK entry point (APPROACH A: static + preload).
 
 // Conforms to the wasm-gaming engine contract (github.com/wasm-gaming/engine-specs):
 // exports `manifest` (declarative) and `load(config)` (imperative).
 
-// Sonic Mania is built as RSDKv5U. The engine binary is game-agnostic at this
-// layer; `Data.rsdk` and `settings.ini` are mounted at runtime into the FS.
+// Sonic Mania is compiled STATICALLY into the engine (GAME_STATIC=ON) and
+// Data.rsdk / Settings.ini are BAKED IN at build time via --preload-file
+// (rsdkv5.data). Nothing is mounted at runtime; `config.assets` is unused.
+// The engine module is a plain (non-MODULARIZE) Emscripten build that reads a
+// global `Module` object and auto-runs main() once rsdkv5.data is fetched —
+// the SDK's job is to stand up that global and inject the script.
+//
+// Consequences vs. the runtime-mount design (see docs/wasm-build-approach-a-
+// static-preload.md): one engine instance per page (the global `Module`),
+// no data/settings swapping, no persistence layer, options are build-time.
 
-import type { EngineConfig, EngineInstance, AssetData } from '@wasm-gaming/engine-specs';
+import type { EngineConfig, EngineInstance } from '@wasm-gaming/engine-specs';
 import { manifest } from './rsdkv5.manifest.js';
-import { DEFAULT_RSDKV5_OPTIONS, type Rsdkv5Options } from './rsdkv5.options.js';
 
 export { manifest };
 
-const WORK_ROOT = '/data';
-const DEFAULT_STORAGE_NAMESPACE = 'default';
-
-/** Serialize engine options into Sonic Mania's settings.ini format. */
-function buildSettingsIni(options: Rsdkv5Options = {}): string {
-  const o = { ...DEFAULT_RSDKV5_OPTIONS, ...options };
-  return [
-    '[Dev]',
-    `EngineDebugMode=${o.engineDebugMode ? 'true' : 'false'}`,
-    `DevMenu=${o.devMenu ? 'true' : 'false'}`,
-    '',
-    '[Game]',
-    `Language=${o.language | 0}`,
-    `Region=${o.region | 0}`,
-    '',
-    '[Video]',
-    'Windowed=true',
-    'Border=true',
-    'ExclusiveFS=false',
-    `VSync=${o.vsync ? 'true' : 'false'}`,
-    'TripleBuffering=false',
-    'PixWidth=424',
-    'WinWidth=424',
-    'WinHeight=240',
-    'FSWidth=0',
-    'FSHeight=0',
-    'RefreshRate=60',
-    'ShaderSupport=false',
-    'ScreenShader=false',
-    '',
-    '[Audio]',
-    'StreamsEnabled=true',
-    'StreamVolume=0.8',
-    'SfxVolume=1.0',
-    '',
-  ].join('\n');
-}
-
-function toUint8(x: unknown): Uint8Array | null {
-  if (x == null) return null;
-  if (typeof x === 'string') return new TextEncoder().encode(x);
-  if (x instanceof Uint8Array) return x;
-  if (x instanceof ArrayBuffer) return new Uint8Array(x);
-  if (ArrayBuffer.isView(x)) return new Uint8Array(x.buffer, x.byteOffset, x.byteLength);
-  throw new TypeError('asset must be Uint8Array | ArrayBuffer | string');
-}
-
-/** Normalize a user-provided storage namespace into a safe relative path. */
-function normalizeStorageNamespace(namespace: unknown): string {
-  if (typeof namespace !== 'string' || !namespace.trim()) return DEFAULT_STORAGE_NAMESPACE;
-
-  const cleaned = namespace
-    .split('/')
-    .map((segment) => segment.trim())
-    .filter(Boolean)
-    .map((segment) => segment.replace(/[^A-Za-z0-9._-]/g, '_'))
-    .filter(Boolean)
-    .join('/');
-
-  return cleaned || DEFAULT_STORAGE_NAMESPACE;
-}
-
-/** Best-effort mkdir -p for the Emscripten FS layer. */
-function ensureDir(Module: any, path: string): void {
-  const parts = path.split('/').filter(Boolean);
-  let current = '';
-  for (const part of parts) {
-    current += `/${part}`;
-    try {
-      Module.FS.mkdir(current);
-    } catch {
-      /* already exists */
-    }
-  }
-}
-
-/** Mount the game working directory. */
-function mountWorkingDir(Module: any, storageNamespace: string): { persistent: boolean; workDir: string } {
-  const workDir = `${WORK_ROOT}/${storageNamespace}`;
-  ensureDir(Module, workDir);
-  return { persistent: false, workDir };
-}
-
-/** True if `path` exists in the (mounted) filesystem. */
-function fileExists(Module: any, path: string): boolean {
-  try {
-    Module.FS.stat(path);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/** Delete a file if present; returns true when something was removed. */
-function deleteFileIfExists(Module: any, path: string): boolean {
-  if (!fileExists(Module, path)) return false;
-  try {
-    Module.FS.unlink(path);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/** RSDKv5-specific bridge for the launcher's debug/stage-select UI. */
+/** RSDKv5-specific bridge for the launcher's debug/stage-select UI.
+ * NOTE: the current engine build has no WebDevMenu embind bridge (unlike
+ * rsdkv4-wasm), so these are guarded no-ops until one is added. */
 export interface RsdkDevMenuBridge {
   getStageList(): Array<{ name: string; stages: Array<{ name: string }> }>;
   loadStage(categoryIdx: number, stageIdx: number): void;
@@ -125,30 +30,27 @@ export interface RsdkDevMenuBridge {
 
 export type Rsdkv5Instance = EngineInstance & {
   devMenu: RsdkDevMenuBridge;
-  /** True when the working dir is OPFS-backed (persistent) rather than in-memory. */
-  persistent: boolean;
-  /** Relative storage namespace used under /data (e.g. "sonic-mania"). */
-  storageNamespace: string;
-  /** Remove persisted game files for this namespace only. */
-  purgeStorage(): { data: boolean; settings: boolean };
 };
 
 /**
- * Extra (engine-specific) config on top of the contract's EngineConfig: lazy asset
- * providers, invoked only on a cache miss.
+ * Extra (engine-specific) config on top of the contract's EngineConfig:
+ * `dataUrl` overrides where the preload package (rsdkv5.data) is fetched from,
+ * mirroring the contract's jsUrl/wasmUrl overrides.
  */
 export type Rsdkv5LoadConfig = EngineConfig & {
-  dataProvider?: () => Promise<AssetData> | AssetData;
-  settingsProvider?: () => Promise<AssetData> | AssetData;
-  /** Per-game storage folder under /data used for OPFS/WASMFS files. */
-  storageNamespace?: string;
+  dataUrl?: string;
 };
+
+let loadedOnce = false;
 
 /** Boot the RSDKv5 engine. */
 export async function load(config: Rsdkv5LoadConfig): Promise<Rsdkv5Instance> {
-  const { canvas, assets, onEvent } = config;
-  const options = config.options as Rsdkv5Options | undefined;
+  const { canvas, onEvent } = config;
   if (!canvas) throw new Error('rsdkv5: config.canvas is required');
+  // The plain Emscripten output owns one global Module per page; a second
+  // load() would silently fight the first over it.
+  if (loadedOnce) throw new Error('rsdkv5: only one engine instance per page');
+  loadedOnce = true;
 
   // Emscripten's SDL2 port locates the canvas via document.querySelector('#canvas').
   if (canvas.id !== 'canvas') canvas.id = 'canvas';
@@ -159,54 +61,55 @@ export async function load(config: Rsdkv5LoadConfig): Promise<Rsdkv5Instance> {
 
   const jsUrl = config.jsUrl ?? new URL('./rsdkv5.js', import.meta.url).href;
   const wasmUrl = config.wasmUrl ?? new URL('./rsdkv5.wasm', import.meta.url).href;
+  const dataUrl = config.dataUrl ?? new URL('./rsdkv5.data', import.meta.url).href;
 
   // RSDKv5 uses the same key map preset used by the shared launcher script.
   if (typeof window !== 'undefined') (window as any).__gamepadKeyMap = manifest.input;
 
-  const mod: any = await import(/* @vite-ignore */ jsUrl);
-  const createRSDKv5 = mod.default;
+  const Module: any = await new Promise((resolve, reject) => {
+    let settled = false;
+    const fail = (err: Error) => {
+      if (!settled) { settled = true; reject(err); }
+      emit({ type: 'error', error: err });
+    };
 
-  const Module: any = await createRSDKv5({
-    canvas,
-    noInitialRun: true,
-    locateFile: (path: string) => (path.endsWith('.wasm') ? wasmUrl : path),
-    print: (...a: unknown[]) => console.log('[rsdkv5]', ...a),
-    printErr: (...a: unknown[]) => console.error('[rsdkv5]', ...a),
-    onAbort: (reason: unknown) =>
-      emit({ type: 'error', error: new Error(`rsdkv5 aborted: ${reason}`) }),
+    const mod: any = {
+      canvas,
+      locateFile: (path: string) =>
+        path.endsWith('.wasm') ? wasmUrl : path.endsWith('.data') ? dataUrl : path,
+      print: (...a: unknown[]) => console.log('[rsdkv5]', ...a),
+      printErr: (...a: unknown[]) => console.error('[rsdkv5]', ...a),
+      onAbort: (reason: unknown) => fail(new Error(`rsdkv5 aborted: ${reason}`)),
+      // Fires once the runtime (including the rsdkv5.data preload) is ready,
+      // just before the auto-run of main(). main() never returns (it parks in
+      // emscripten_set_main_loop), so postRun would never fire — this is the
+      // one reliable "ready" hook.
+      onRuntimeInitialized: () => {
+        if (!settled) { settled = true; resolve(mod); }
+      },
+    };
+    (globalThis as any).Module = mod;
+
+    const script = document.createElement('script');
+    script.src = jsUrl;
+    script.async = true;
+    script.onerror = () => fail(new Error(`rsdkv5: failed to load ${jsUrl}`));
+    document.head.appendChild(script);
   });
 
-  const storageNamespace = normalizeStorageNamespace(config.storageNamespace);
-  const { persistent, workDir } = mountWorkingDir(Module, storageNamespace);
-  const dataPath = `${workDir}/Data.rsdk`;
-  const settingsPath = `${workDir}/settings.ini`;
-
-  // Data.rsdk — precedence: explicit asset > lazy provider > existing file.
-  let dataBytes = toUint8(assets?.data);
-  if (!dataBytes && config.dataProvider) {
-    dataBytes = toUint8(await config.dataProvider());
-  }
-  if (dataBytes) {
-    Module.FS.writeFile(dataPath, dataBytes);
-  } else if (!fileExists(Module, dataPath)) {
-    throw new Error('rsdkv5: no Data.rsdk — provide assets.data or dataProvider');
-  }
-
-  // settings.ini — explicit asset > lazy provider > generated from options.
-  let settingsBytes = toUint8(assets?.settings);
-  if (!settingsBytes && config.settingsProvider) {
-    settingsBytes = toUint8(await config.settingsProvider());
-  }
-  if (settingsBytes) {
-    Module.FS.writeFile(settingsPath, settingsBytes);
-  } else if (!fileExists(Module, settingsPath)) {
-    Module.FS.writeFile(settingsPath, new TextEncoder().encode(buildSettingsIni(options)));
-  }
-
-  Module.FS.chdir(workDir);
+  emit({ type: 'ready' });
 
   const setPaused = (paused: boolean) => {
-    if (typeof Module.web_devmenu_set_paused === 'function') Module.web_devmenu_set_paused(paused);
+    // No WebDevMenu bridge in this build; fall back to the Emscripten main-loop
+    // pause when the glue exposes it (not in EXPORTED_RUNTIME_METHODS, so
+    // this is best-effort — the proven flag set is deliberately unchanged).
+    if (typeof Module.web_devmenu_set_paused === 'function') {
+      Module.web_devmenu_set_paused(paused);
+    } else if (paused && typeof Module.pauseMainLoop === 'function') {
+      Module.pauseMainLoop();
+    } else if (!paused && typeof Module.resumeMainLoop === 'function') {
+      Module.resumeMainLoop();
+    }
   };
 
   const devMenu: RsdkDevMenuBridge = {
@@ -227,15 +130,12 @@ export async function load(config: Rsdkv5LoadConfig): Promise<Rsdkv5Instance> {
     setPaused,
   };
 
-  Module.callMain(['UsingCWD']);
-  emit({ type: 'ready' });
-
   return {
-    start() {},
+    start() {}, // auto-ran by the module once the preload finished
     pause() { setPaused(true); },
     resume() { setPaused(false); },
     reset() {
-      throw new Error('rsdkv5: reset() is not supported — destroy() and load() again');
+      throw new Error('rsdkv5: reset() is not supported — reload the page');
     },
     setInput(preset) {
       if (typeof window !== 'undefined') {
@@ -244,17 +144,8 @@ export async function load(config: Rsdkv5LoadConfig): Promise<Rsdkv5Instance> {
     },
     destroy() {
       try { Module.pauseMainLoop?.(); } catch { /* noop */ }
-      try { setPaused(true); } catch { /* noop */ }
     },
     devMenu,
-    persistent,
-    storageNamespace,
-    purgeStorage() {
-      return {
-        data: deleteFileIfExists(Module, dataPath),
-        settings: deleteFileIfExists(Module, settingsPath),
-      };
-    },
   };
 }
 

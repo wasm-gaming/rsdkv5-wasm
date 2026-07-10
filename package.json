@@ -1,7 +1,7 @@
 {
   "name": "@wasm-gaming/rsdkv5-wasm",
   "version": "0.1.0",
-  "description": "RSDKv5 (Retro Software Development Kit v5) compiled to WebAssembly, with a JS SDK conforming to the wasm-gaming engine contract. Runs Sonic Mania by loading Data.rsdk at runtime.",
+  "description": "RSDKv5U (Retro Software Development Kit v5) compiled to WebAssembly, with a JS SDK conforming to the wasm-gaming engine contract. Sonic Mania is statically linked; game data is baked into rsdkv5.data at build time from your own Data.rsdk.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wasm-gaming/rsdkv5-wasm.git"
@@ -26,6 +26,7 @@
   },
   "files": [
     "dist/rsdkv5/",
+    "!dist/rsdkv5/rsdkv5.data",
     "dist/manifest.json",
     "src/rsdkv5.manifest.ts",
     "src/rsdkv5.options.ts",

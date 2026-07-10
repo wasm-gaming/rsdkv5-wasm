@@ -1,10 +1,16 @@
 
 name: Build
 
-# Builds the TypeScript SDK (on a Node runner) and the game-agnostic RSDKv5 WASM
-# (inside an emscripten/emsdk container job — build.sh runs there directly, no
-# `docker run`). On tags it merges both into a Release; on main / manual runs it
-# publishes the demo (dist/) to GitHub Pages.
+# Builds the TypeScript SDK (on a Node runner) and the Sonic-Mania-static RSDKv5U
+# WASM (inside an emscripten/emsdk container job — build.sh runs there directly,
+# no `docker run`). On tags it merges both into a Release; on main / manual runs
+# it publishes the demo (dist/) to GitHub Pages.
+#
+# APPROACH A CAVEAT: build.sh bakes Data.rsdk into rsdkv5.data at build time, and
+# game data is proprietary — it cannot live in the repo. The wasm job therefore
+# fetches it from the RSDKV5_DATA_URL secret (a private, pre-authenticated URL);
+# when that secret is not configured the wasm job (and the release/pages jobs
+# depending on it) is skipped rather than failed.
 
 on:
   push:
@@ -39,15 +45,42 @@ jobs:
           name: sdk-dist
           path: dist/
 
-  wasm:
+  # Expose whether the game-data secret is configured as a job output (secrets
+  # can't be referenced in job-level `if` directly).
+  data-check:
     runs-on: ubuntu-latest
-    container: emscripten/emsdk:latest
+    outputs:
+      has-data: ${{ steps.check.outputs.has-data }}
+    steps:
+      - id: check
+        env:
+          RSDKV5_DATA_URL: ${{ secrets.RSDKV5_DATA_URL }}
+        run: echo "has-data=${{ env.RSDKV5_DATA_URL != '' }}" >> "$GITHUB_OUTPUT"
+
+  wasm:
+    needs: data-check
+    if: needs.data-check.outputs.has-data == 'true'
+    runs-on: ubuntu-latest
+    # Pinned to the toolchain the proven recipe was verified with (see
+    # docs/wasm-build-shared-core.md), not :latest.
+    container: emscripten/emsdk:6.0.2
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch Data.rsdk
+        env:
+          RSDKV5_DATA_URL: ${{ secrets.RSDKV5_DATA_URL }}
+        run: |
+          mkdir -p dist
+          curl -fsSL "$RSDKV5_DATA_URL" -o dist/Data.rsdk
       # build.sh runs directly in this container (emcc/make/git/python3/perl are
       # all present in emscripten/emsdk); it does not call Docker itself.
       - name: Build WASM
         run: bash scripts/build.sh
+      # rsdkv5.data IS the preloaded Data.rsdk (+Settings.ini) — proprietary game
+      # data. It must never reach a public Release or Pages; hosts run build.sh
+      # with their own Data.rsdk to produce it. Only the engine js/wasm ship.
+      - name: Strip proprietary game data from artifact
+        run: rm -f dist/Data.rsdk dist/rsdkv5/rsdkv5.data
       - uses: actions/upload-artifact@v4
         with:
           name: wasm-dist

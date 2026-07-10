@@ -7,8 +7,9 @@
 //                               `options` (for runtime host UI + validation)
 //   - `DEFAULT_RSDKV5_OPTIONS` — defaults the SDK falls back to.
 //
-// At runtime these options are serialized into Sonic Mania's `Settings.ini`
-// when the host does not pass an explicit `settings` asset.
+// APPROACH A (static + preload): Settings.ini is baked into rsdkv5.data at
+// BUILD time (scripts/build.sh writes it), so these options describe build-time
+// configuration — the SDK does not serialize them at runtime.
 
 import type { JSONSchema } from '@wasm-gaming/engine-specs';
 
