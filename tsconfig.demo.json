@@ -1,0 +1,22 @@
+{
+  // Demo is compiled separately so src/demo/demo.ts → dist/demo.js (flat, sibling
+  // to the built SDK). It resolves the SDK from the already-built dist/*.d.ts and
+  // keeps the bare package specifier in the output (the page's import map maps it
+  // to ./rsdkv5.sdk.js at runtime). Run after `build:lib`.
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022", "DOM"],
+    "outDir": "dist",
+    "rootDir": "src/demo",
+    "strict": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true,
+    "baseUrl": ".",
+    "paths": {
+      "@wasm-gaming/rsdkv5-wasm": ["./dist/rsdkv5/rsdkv5.sdk.d.ts"]
+    }
+  },
+  "include": ["src/demo/**/*.ts"]
+}

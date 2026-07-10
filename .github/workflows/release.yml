@@ -1,0 +1,105 @@
+
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump type
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    # Must match the Environment set on the npm trusted publisher (production),
+    # otherwise the OIDC environment claim mismatches and publish 404s.
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          scope: '@wasm-gaming'
+          registry-url: https://registry.npmjs.org
+
+      - name: Upgrade npm for OIDC trusted publishing
+        # Trusted publishing (tokenless OIDC) requires npm >= 11.5.1.
+        # Node 24 already ships npm 11.x; upgrade to latest to be safe.
+        run: |
+          npm install -g npm@latest
+          npm --version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate
+        run: |
+          make typecheck
+          make test
+
+      - name: Build (SDK + WASM + manifest)
+        # Full build so the tarball actually contains dist/rsdkv5/rsdkv5.{js,wasm}
+        # and dist/manifest.json. `make test` only runs build-lib (SDK .js/.d.ts),
+        # which is why those artifacts were missing from the pack.
+        run: make build
+
+      - name: Configure Git
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+
+      - name: Bump version, commit, and tag
+        id: bump_version
+        run: |
+          NEW_TAG=$(npm version "${{ inputs.bump }}" -m "chore(release): %s")
+          echo "new_tag=$NEW_TAG" >> "$GITHUB_OUTPUT"
+
+      - name: npm publish preflight
+        run: |
+          npm config get registry
+          npm pack --dry-run
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+
+      - name: Push commit and tag
+        run: git push origin HEAD --follow-tags
+
+      - name: Package dist archives
+        # Bundle the built dist/ (SDK + WASM + manifest) as release assets.
+        # Both archives contain a top-level rsdkv5/ directory.
+        run: |
+          cp -r dist rsdkv5
+          tar -czf rsdkv5.tar.gz rsdkv5
+          zip -r rsdkv5.zip rsdkv5
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.bump_version.outputs.new_tag }}
+          name: ${{ steps.bump_version.outputs.new_tag }}
+          generate_release_notes: true
+          files: |
+            rsdkv5.tar.gz
+            rsdkv5.zip

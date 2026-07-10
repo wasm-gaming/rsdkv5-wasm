@@ -1,0 +1,115 @@
+
+name: Build
+
+# Builds the TypeScript SDK (on a Node runner) and the game-agnostic RSDKv5 WASM
+# (inside an emscripten/emsdk container job — build.sh runs there directly, no
+# `docker run`). On tags it merges both into a Release; on main / manual runs it
+# publishes the demo (dist/) to GitHub Pages.
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Serialize Pages deployments (don't cancel an in-progress one).
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: npm install
+      - name: Build SDK (TypeScript)
+        run: make build-sdk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdk-dist
+          path: dist/
+
+  wasm:
+    runs-on: ubuntu-latest
+    container: emscripten/emsdk:latest
+    steps:
+      - uses: actions/checkout@v4
+      # build.sh runs directly in this container (emcc/make/git/python3/perl are
+      # all present in emscripten/emsdk); it does not call Docker itself.
+      - name: Build WASM
+        run: bash scripts/build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wasm-dist
+          path: dist/
+
+  release:
+    needs: [sdk, wasm]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: sdk-dist
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: wasm-dist
+          path: dist
+      - name: Attach to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/rsdkv5/rsdkv5.js
+            dist/rsdkv5/rsdkv5.wasm
+            dist/rsdkv5/rsdkv5.sdk.js
+            dist/rsdkv5/rsdkv5.sdk.d.ts
+            dist/rsdkv5/rsdkv5.options.js
+            dist/rsdkv5/rsdkv5.options.d.ts
+            dist/rsdkv5/rsdkv5.manifest.js
+            dist/rsdkv5/rsdkv5.manifest.d.ts
+            dist/manifest.json
+            dist/index.html
+            dist/demo.js
+
+  # Publish the demo (dist/) to GitHub Pages. No Data.rsdk ships (git-ignored), so
+  # the live demo shows the pick/drag-and-drop fallback. NOTE: GitHub Pages can't
+  # send COOP/COEP headers, so the page is not cross-origin isolated → OPFS won't
+  # engage and the SDK uses the in-memory WASMFS backend.
+  pages:
+    needs: [sdk, wasm]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: sdk-dist
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: wasm-dist
+          path: dist
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deploy
+        uses: actions/deploy-pages@v4
