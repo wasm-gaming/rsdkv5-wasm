@@ -471,7 +471,7 @@ export class Rsdkv5Play extends EnginePlayBase<Rsdkv5Payloads> {
 export class Rsdkv5SDK extends EngineSDKBase<Rsdkv5Payloads> {
   static readonly id = ENGINE_ID;
   /** Kept in step with package.json by `node scripts/sync-version.mjs`. */
-  static readonly version = '0.1.1';
+  static readonly version = '0.1.2';
   static readonly name = 'Retro Software Development Kit v3';
   static readonly description =
     'RSDKv5U (Sonic Mania decompilation) compiled to WebAssembly. Ships none of the game: the player provides Data.rsdk, and it never leaves their browser.';

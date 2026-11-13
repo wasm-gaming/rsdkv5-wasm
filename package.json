@@ -1,6 +1,6 @@
 {
   "name": "@wasm-gaming/rsdkv5-wasm",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "RSDKv5U (Sonic Mania decompilation) compiled to WebAssembly, with a self-contained JS SDK implementing the wasm-gaming engine contract. Data.rsdk is loaded at runtime.",
   "repository": {
     "type": "git",
