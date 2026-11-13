@@ -45,6 +45,25 @@ await play.destroy();                          // save flushed, loop stopped, au
 Events: the contract's `start`, `error`, `exit`, `pause`, `resume`, plus `saves`.
 RSDKv5 cannot restart in process: after `destroy()`, a new session needs a new page (or iframe).
 
+## The engine's own app
+
+A host that would rather not draw menus mounts the app shipped next to the SDK
+([engine-specs](https://github.com/wasm-gaming/engine-specs) `EngineApp`, `UX.md`):
+
+```js
+const app = await import('@wasm-gaming/rsdkv5-wasm/app'); // dist/rsdkv5/app/app.js
+const handle = await app.mount(element, { game, storage, assets, input, exit });
+await handle.unmount();
+```
+
+It shows a boot screen, then Sonic Mania with its own title and save select. Select + Start or
+Escape opens the pause menu: *Continuar*, the game's own screens found in the stage list (title
+screen, main menu, level select — only those the data has) and *Volver al lanzador* (asks first).
+There is no load-game screen like rsdkv4's yet: that needs a native bridge (see `RECORD/`).
+
+This build does not expose the stage list yet, so Mania's pause menu has only *Continuar* and
+*Volver al lanzador*. `pause()` freezes the game by stopping emscripten's main loop.
+
 ## Saves live in the engine's own folder
 
 The working dir is `/data/rsdkv5/<namespace>` (in memory), and Sonic Mania writes its user files there

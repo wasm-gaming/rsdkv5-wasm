@@ -1,0 +1,77 @@
+/* rsdkv5 app — boot screen and pause menu (same look as rsdkv4's app).
+   Tokens come from engine-specs (UI_TOKENS, `--wg-*`) when the host sets them; the
+   fallbacks are the same values, so the app looks right on a bare page too. */
+
+.rsdk-app {
+  --ring: var(--wg-focus-ring, 0 0 0 3px #fff);
+  --surface: var(--wg-surface, rgb(18 20 28 / 0.78));
+  --line: var(--wg-line, rgb(255 255 255 / 0.12));
+  --text: var(--wg-text, #f4f6fb);
+  --muted: var(--wg-muted, #8e97a9);
+  --danger: var(--wg-danger, #f87171);
+  --ui: var(--wg-font-ui, 'Inter Variable', 'Inter', system-ui, sans-serif);
+  --display: var(--wg-font-display, 'Unbounded Variable', 'Unbounded', system-ui, sans-serif);
+  --ease: var(--wg-ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+  color: var(--text);
+  font-family: var(--ui);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.rsdk-app * { box-sizing: border-box; }
+.rsdk-stage { position: absolute; inset: 0; display: grid; place-items: center; }
+.rsdk-stage canvas { outline: none; }
+.rsdk-overlay { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.rsdk-overlay > * { pointer-events: auto; }
+.rsdk-app[data-screen='game'] .rsdk-overlay { display: none; }
+
+/* Everything but the game sits on a backdrop that keeps the game visible underneath. */
+.rsdk-app:not([data-screen='game']) .rsdk-overlay {
+  background:
+    radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 70%),
+    rgb(4 6 12 / 0.72);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+.rsdk-app[data-screen='boot'] .rsdk-overlay { background-color: rgb(4 6 12 / 0.9); }
+
+.kicker { margin: 0; font: 600 0.72rem var(--ui); letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+.rsdk-app h2 { margin: 0; font: 700 clamp(1.4rem, 3vw, 2.1rem) var(--display); letter-spacing: -0.02em; }
+
+/* ---- boot ---- */
+.rsdk-boot { display: grid; justify-items: center; gap: 22px; }
+.rsdk-boot img { width: min(260px, 50vw); border-radius: 22px; box-shadow: 0 30px 80px -30px #000; animation: rsdk-breathe 2.4s var(--ease) infinite alternate; }
+.rsdk-boot p { margin: 0; color: var(--muted); font-weight: 500; }
+@keyframes rsdk-breathe { from { opacity: 0.55; transform: scale(0.98); } to { opacity: 1; transform: none; } }
+
+/* ---- pause & confirm ---- */
+.rsdk-panel {
+  width: min(440px, 92vw); display: grid; gap: 10px; padding: 26px; border-radius: 28px;
+  background: rgb(20 22 31 / 0.9); border: 1px solid var(--line); box-shadow: 0 40px 100px -30px #000;
+}
+.rsdk-panel h2 { margin-bottom: 8px; }
+.rsdk-panel .text { margin: 0 0 8px; color: var(--muted); line-height: 1.5; }
+.item {
+  all: unset; box-sizing: border-box; display: grid; gap: 2px; padding: 13px 16px; border-radius: 14px;
+  background: rgb(255 255 255 / 0.05); font-weight: 600; cursor: pointer; transition: background 0.15s, box-shadow 0.15s;
+}
+.item small { font-weight: 500; font-size: 0.78rem; color: var(--muted); }
+.item.is-focused { background: #fff; color: #0b0d12; box-shadow: var(--ring); }
+.item.is-focused small { color: #4b5563; }
+.item.is-danger.is-focused { background: var(--danger); color: #1a0505; box-shadow: 0 0 0 3px var(--danger); }
+.rsdk-panel .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rsdk-panel .row .item { text-align: center; }
+.rsdk-confirm { position: absolute; inset: 0; display: grid; place-items: center; background: rgb(0 0 0 / 0.55); }
+
+/* ---- hints ---- */
+.rsdk-hints { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center; color: var(--muted); font-size: 0.78rem; font-weight: 500; }
+.rsdk-hints span { display: inline-flex; align-items: center; gap: 7px; }
+.rsdk-hints kbd { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; background: rgb(255 255 255 / 0.12); color: var(--text); font: 700 0.68rem var(--ui); }
+.rsdk-panel .rsdk-hints { justify-content: flex-start; margin-top: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rsdk-boot img { transition: none; animation: none; }
+}

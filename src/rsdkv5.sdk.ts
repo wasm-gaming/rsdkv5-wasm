@@ -71,6 +71,7 @@ interface Rsdkv5Module {
   };
   callMain(args: string[]): void;
   pauseMainLoop?: () => void;
+  resumeMainLoop?: () => void;
   web_devmenu_get_stage_list?: () => string;
   web_devmenu_load_stage?: (category: number, stage: number) => void;
   web_devmenu_set_paused?: (paused: boolean) => void;
@@ -251,6 +252,9 @@ export class Rsdkv5Play extends EnginePlayBase<Rsdkv5Payloads> {
     if (!Module || this.#pauseOwner) return;
     this.#pauseOwner = owner;
     Module.web_devmenu_set_paused?.(true);
+    // This build has no native pause hook (web_devmenu_* are not compiled in), so the
+    // game is frozen by stopping emscripten's main loop: no frame runs until resume().
+    Module.pauseMainLoop?.();
     void Module.SDL2?.audioContext?.suspend();
     void this.flushSaves();
     this.emit('pause', { owner });
@@ -262,6 +266,7 @@ export class Rsdkv5Play extends EnginePlayBase<Rsdkv5Payloads> {
     this.#pauseOwner = null;
     void Module.SDL2?.audioContext?.resume();
     Module.web_devmenu_set_paused?.(false);
+    Module.resumeMainLoop?.();
     this.emit('resume', { owner });
   }
 
