@@ -1,72 +1,70 @@
 # @wasm-gaming/rsdkv5-wasm — build & preview
 #
-#   make build     Full build → dist/ (TypeScript SDK + WASM)
-#   make preview   Serve dist/ at http://localhost:$(PORT)
+#   make build       The package: SDK + WASM → dist/
+#   make build-sdk   TypeScript only (fast, no Docker) → dist/rsdkv5/
+#   make build-wasm  RSDKv5 → WebAssembly, in the pinned emsdk image (Docker)
+#   make demo        The no-build demo page → dist/index.html
+#   make test        Type-check, then the tests against the built package
+#   make preview     Serve dist/ with COOP/COEP
 #
-# All build logic lives here (package.json has no scripts). Sub-targets:
-# build-sdk (TS only), build-lib/manifest/demo, build-wasm (Docker/emsdk),
-# typecheck/test/release-check, install, clean.
+# All build logic lives here (package.json has no scripts).
 
-# Local npm bin, so we can run tsc without a global install. NOTE: we call it as
-# $(BIN)/tsc rather than adding it to PATH — macOS ships GNU Make 3.81, whose
-# direct-exec of simple recipe lines ignores a make-variable PATH (even exported),
-# so `PATH := ...` + bare `tsc` silently fails there. Path-prefixing works on every
-# make version. (node/cp/python3/bash resolve via the system PATH already.)
 BIN := node_modules/.bin
-
 PORT ?= 8025
+SPECS := node_modules/@wasm-gaming/engine-specs
 
-.PHONY: build build-sdk build-lib build-manifest build-demo build-wasm \
-	preview typecheck test release-check i install clean help
+.PHONY: build build-sdk build-lib build-specs build-wasm build-wasm-ci demo \
+	typecheck test release-check preview i install clean help
 
 i: install
-install: ## Install dev dependencies (typescript)
+install: ## Install dependencies
 	npm install
 
-# Real target: only (re)installs when package.json is newer than node_modules.
 node_modules: package.json
 	npm install
 	@touch node_modules
 
-build: build-sdk build-wasm ## Full build → dist/ (TypeScript + WASM)
+build: build-wasm build-sdk demo ## The package and the demo: WASM + SDK → dist/
 
-build-sdk: build-lib build-manifest build-demo ## TypeScript → dist/ (no WASM)
+build-sdk: build-lib build-specs ## The published SDK: TypeScript → dist/rsdkv5/ (no WASM)
 
-build-lib: node_modules ## Compile SDK/options/manifest → dist/rsdkv5/
+build-lib: node_modules ## Compile SDK + options → dist/rsdkv5/
 	$(BIN)/tsc -p tsconfig.json
 
-build-manifest: build-lib ## Serialize typed manifest → dist/manifest.json
-	node scripts/emit-manifest.mjs
+build-specs: build-lib ## Ship the contract runtime beside the SDK and import it relatively
+	# The SDK extends the contract's base classes, so engine-specs is a runtime
+	# import. Copied into dist/rsdkv5/ (inside `files`) and the emitted imports
+	# rewritten to it: the package loads from any static server, no import map.
+	cp $(SPECS)/dist/engine-specs.js dist/rsdkv5/engine-specs.js
+	node scripts/localize-specs.mjs dist/rsdkv5
 
-build-demo: build-lib ## Compile demo → dist/{demo.js,index.html}; seed settings.ini
-	$(BIN)/tsc -p tsconfig.demo.json
-	cp src/demo/index.html dist/index.html
-	node scripts/seed-settings.mjs
-
-build-wasm: ## WASM via emscripten/emsdk (Docker) → dist/rsdkv5/rsdkv5.{js,wasm}
+build-wasm: ## RSDKv5 → WebAssembly via the pinned emsdk image (Docker) → dist/rsdkv5/
 	bash scripts/build-docker.sh
 
-typecheck: build-lib ## Type-check without emitting (works from a clean checkout)
+build-wasm-ci: ## Same build, run directly (CI runs inside the emsdk container)
+	bash scripts/build.sh
+
+demo: ## The no-build demo page → dist/index.html
+	cp src/demo/index.html dist/index.html
+
+typecheck: node_modules ## Type-check the SDK
 	$(BIN)/tsc -p tsconfig.json --noEmit
-	$(BIN)/tsc -p tsconfig.demo.json --noEmit
 
-test: typecheck ## Run the test suite (currently TypeScript checks)
+test: typecheck build-sdk ## Type-check, then run tests/ against the built package
+	node --test tests/*.test.mjs
 
-release-check: test ## Preflight release checks (types/tests + npm pack preview)
+release-check: build-sdk test ## npm pack preview
 	npm config get registry
 	npm pack --dry-run
 
-preview: ## Serve dist/ at http://localhost:$(PORT)
+preview: ## Serve dist/ with COOP/COEP headers
 	@echo "Serving dist/ at http://localhost:$(PORT) (Ctrl+C to stop)"
-	@# Uses a custom local server that injects COOP/COEP for cross-origin isolation.
 	python3 scripts/preview-server.py --port $(PORT) --directory dist
 
-clean: ## Remove build outputs (keeps dist/Data.rsdk and dist/settings.ini)
-# 	rm -rf .tmp
-	@if [ -d dist ]; then find dist -mindepth 1 ! -name Data.rsdk ! -name settings.ini -delete; fi
+clean: ## Remove build outputs
+	@if [ -d dist ]; then find dist -mindepth 1 -delete; fi
 
 help: ## List targets
-	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
-		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-14s %s\n", $$1, $$2}'
 
 .DEFAULT_GOAL := help

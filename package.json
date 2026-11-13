@@ -1,7 +1,7 @@
 {
   "name": "@wasm-gaming/rsdkv5-wasm",
   "version": "0.1.1",
-  "description": "RSDKv5 (Retro Software Development Kit v5) compiled to WebAssembly, with a JS SDK conforming to the wasm-gaming engine contract. Runs Sonic Mania by loading Data.rsdk at runtime.",
+  "description": "RSDKv5U (Sonic Mania decompilation) compiled to WebAssembly, with a self-contained JS SDK implementing the wasm-gaming engine contract. Data.rsdk is loaded at runtime.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wasm-gaming/rsdkv5-wasm.git"
@@ -21,31 +21,21 @@
     "./options": {
       "types": "./dist/rsdkv5/rsdkv5.options.d.ts",
       "import": "./dist/rsdkv5/rsdkv5.options.js"
-    },
-    "./manifest": "./dist/manifest.json"
+    }
   },
   "files": [
     "dist/rsdkv5/",
-    "!dist/rsdkv5/*.data",
-    "!dist/rsdkv5/*.rsdk",
-    "dist/manifest.json",
-    "src/rsdkv5.manifest.ts",
     "src/rsdkv5.options.ts",
     "src/rsdkv5.sdk.ts",
     "README.md"
   ],
   "comment:scripts": "Build logic lives in the Makefile, not here (make build / build-sdk / build-wasm / preview).",
   "scripts": {},
-  "peerDependencies": {
-    "@wasm-gaming/engine-specs": "*"
-  },
-  "peerDependenciesMeta": {
-    "@wasm-gaming/engine-specs": {
-      "optional": true
-    }
+  "comment:dependencies": "engine-specs is the one wasm-gaming package an engine depends on. Its runtime is also copied into dist/rsdkv5/ and imported relatively, so the built SDK loads without a bundler or an import map; the dependency carries the types.",
+  "dependencies": {
+    "@wasm-gaming/engine-specs": "^0.3.2"
   },
   "devDependencies": {
-    "@wasm-gaming/engine-specs": "^0.1.0",
     "typescript": "^5.5.0"
   },
   "engineContract": "https://github.com/wasm-gaming/engine-specs",
