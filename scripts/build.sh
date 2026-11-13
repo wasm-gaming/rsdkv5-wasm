@@ -492,11 +492,19 @@ target_link_options(RetroEngine PRIVATE
     -sEXPORT_NAME=createRSDKv5
     -sINVOKE_RUN=0
     -sEXPORTED_RUNTIME_METHODS=[FS,callMain,ccall,cwrap]
-    -sEXPORTED_FUNCTIONS=[_main]
+    -sEXPORTED_FUNCTIONS=[_main,_web_mania_save_status,_web_mania_start_slot,_web_mania_characters]
     # embind, for WebDevMenu.cpp's web_devmenu_* (the SDK's devMenu bridge)
     --bind
 )
 EOF
+
+echo "Appending the load-game bridge to the game (scripts/web_mania.c)..."
+# web_mania_save_status / web_mania_start_slot: the SDK's saves.ready() / saves.start().
+# In the game library, next to Mania's own save-select action they mirror.
+UISUB="$WORK_DIR/SonicMania/Objects/Menu/UISubHeading.c"
+grep -q "void UISubHeading_SaveButton_ActionCB" "$UISUB" || { echo "error: UISubHeading.c has no SaveButton_ActionCB — upstream moved" >&2; exit 1; }
+cat "$ROOT_DIR/scripts/web_mania.c" >> "$UISUB"
+grep -q "web_mania_start_slot" "$UISUB" || { echo "error: web_mania.c not appended" >&2; exit 1; }
 
 echo "Adding WebDevMenu.cpp (the SDK's devMenu bridge: stage list + stage load)..."
 # The SDK has always called Module.web_devmenu_get_stage_list / _load_stage; without this

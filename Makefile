@@ -38,12 +38,12 @@ build-specs: build-lib ## Ship the contract runtime beside the SDK and import it
 	cp $(SPECS)/dist/engine-specs.js dist/rsdkv5/engine-specs.js
 	node scripts/localize-specs.mjs dist/rsdkv5
 
-build-app: ## The engine's own app (boot screen + pause menu) → dist/rsdkv5/app/
+build-app: ## The engine's own app (load-game screen + pause menu) → dist/rsdkv5/app/
 	# Plain JS + CSS, imported by hosts as <engine>/app/app.js (EngineApp). It loads
 	# the SDK next to it relatively.
 	rm -rf dist/rsdkv5/app
 	mkdir -p dist/rsdkv5/app
-	cp src/app/app.js src/app/app.css dist/rsdkv5/app/
+	cp -R src/app/app.js src/app/app.css src/app/assets dist/rsdkv5/app/
 
 build-wasm: ## RSDKv5 → WebAssembly via the pinned emsdk image (Docker) → dist/rsdkv5/
 	bash scripts/build-docker.sh

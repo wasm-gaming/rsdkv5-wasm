@@ -56,10 +56,18 @@ const handle = await app.mount(element, { game, storage, assets, input, exit });
 await handle.unmount();
 ```
 
-It shows a boot screen, then Sonic Mania with its own title and save select. Select + Start or
-Escape opens the pause menu: *Continuar*, the game's own screens found in the stage list (title
-screen, main menu, level select — only those the data has) and *Volver al lanzador* (asks first).
-There is no load-game screen like rsdkv4's yet: that needs a native bridge (see `RECORD/`).
+It shows a load-game screen first — craft's cards (as rsdkv4's app) on Mania's eight save slots:
+zone, character, emeralds, lives and score; an empty slot picks the character (Mighty and Ray with
+Plus) — plus a card to Mania's own menus (Encore, Time Attack…). A slot is started through the
+build's bridge, which replays Mania's own save-select action, so Mania writes `SaveData.bin` itself.
+The SDK exposes the same as `play.saves` (`list()`, `ready()`, `start(slot, character)`) and
+`play.mute()`. Mania only loads its save once the title screen is up, so the game runs muted
+behind the slot screen until then; a slot picked earlier starts as soon as it is ready.
+
+Select + Start or Escape opens the pause menu: *Continuar*, *Cambiar de partida* (back to the
+slots), the game's own screens found in the stage list (title screen, main menu, level select —
+only those the data has) and *Volver al lanzador* (asks first). A wasm without the bridge gets
+the game with its own menus instead of the slot screen.
 
 `pause()` freezes the game by stopping emscripten's main loop. The stage list comes from the
 build's own bridge (`web_devmenu_*` in `scripts/build.sh`).

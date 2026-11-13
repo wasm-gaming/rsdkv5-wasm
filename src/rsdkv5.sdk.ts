@@ -75,6 +75,9 @@ interface Rsdkv5Module {
   web_devmenu_get_stage_list?: () => string;
   web_devmenu_load_stage?: (category: number, stage: number) => void;
   web_devmenu_set_paused?: (paused: boolean) => void;
+  _web_mania_save_status?: () => number;
+  _web_mania_start_slot?: (slot: number, character: number) => number;
+  _web_mania_characters?: () => number;
   SDL2?: { audioContext?: AudioContext };
 }
 
@@ -84,6 +87,87 @@ type Rsdkv5Factory = (overrides: Record<string, unknown>) => Promise<Rsdkv5Modul
 export interface RsdkDevMenuBridge {
   getStageList(): Array<{ name: string; stages: Array<{ name: string }> }>;
   loadStage(category: number, stage: number): void;
+}
+
+/** Mania's characters, by the `characterID` its save slots store. */
+export const MANIA_CHARACTERS = ['Sonic & Tails', 'Sonic', 'Tails', 'Knuckles', 'Mighty', 'Ray'] as const;
+
+/** Mania Mode's zones, by the `zoneID` its save slots store. */
+export const MANIA_ZONES = [
+  'Green Hill', 'Chemical Plant', 'Studiopolis', 'Flying Battery', 'Press Garden', 'Stardust Speedway',
+  'Hydrocity', 'Mirage Saloon', 'Oil Ocean', 'Lava Reef', 'Metallic Madness', 'Titanic Monarch', 'Egg Reverie',
+] as const;
+
+/** One Mania Mode save slot, as `SaveData.bin` has it. */
+export interface ManiaSaveSlot {
+  /** 0-7, the slot Mania numbers 1-8. */
+  slot: number;
+  state: 'empty' | 'progress' | 'complete';
+  /** Index into {@link MANIA_CHARACTERS}. */
+  character: number;
+  /** Index into {@link MANIA_ZONES}; meaningful while in progress. */
+  zone: number;
+  zoneName: string;
+  lives: number;
+  score: number;
+  /** How many of the seven Chaos Emeralds (the save keeps a bit mask). */
+  emeralds: number;
+  continues: number;
+}
+
+/** Mania Plus's eight regular save slots in `SaveData.bin` (Encore slots are elsewhere). */
+export const MANIA_SAVE_SLOTS = 8;
+const SLOT_BYTES = 0x400;
+const SLOT_FIELDS = 0x58; // SaveRAM: the entity header Mania keeps before the fields
+
+/**
+ * Mania Mode's save slots from `SaveData.bin` (`globals->saveRAM`, int32 LE): slot `s`
+ * is the 0x400-byte block at `0x400 * s`, fields from +0x58. A missing or short file
+ * reads as empty slots.
+ */
+export function parseManiaSaves(bytes: Uint8Array | null): ManiaSaveSlot[] {
+  const view = bytes ? new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength) : null;
+  return Array.from({ length: MANIA_SAVE_SLOTS }, (_, slot) => {
+    const base = slot * SLOT_BYTES + SLOT_FIELDS;
+    const field = (i: number): number => (view && base + i * 4 + 4 <= view.byteLength ? view.getInt32(base + i * 4, true) : 0);
+    const state = field(0) === 1 ? 'progress' : field(0) === 2 ? 'complete' : 'empty';
+    const character = Math.max(0, Math.min(MANIA_CHARACTERS.length - 1, field(1)));
+    const zone = field(2);
+    let emeralds = 0;
+    for (let mask = field(6) & 0x7f; mask; mask >>= 1) emeralds += mask & 1;
+    return {
+      slot,
+      state,
+      character: state === 'empty' ? 0 : character,
+      zone: state === 'empty' ? 0 : zone,
+      zoneName: state === 'complete' ? 'Complete' : state === 'empty' ? '' : (MANIA_ZONES[zone] ?? 'Unknown zone'),
+      lives: state === 'empty' ? 3 : field(3),
+      score: state === 'empty' ? 0 : field(4),
+      emeralds: state === 'empty' ? 0 : emeralds,
+      continues: state === 'empty' ? 0 : field(7),
+    };
+  });
+}
+
+/** Mania Mode's save slots, read and started the way Mania's own save select does. */
+export interface ManiaSaves {
+  /** True when this build has the bridge (older wasm builds don't). */
+  readonly available: boolean;
+  /** How many characters a new game can pick: 6 with Plus (Mighty, Ray), else 4. */
+  readonly characters: number;
+  /** The eight slots, from the save file as it is now. */
+  list(): ManiaSaveSlot[];
+  /**
+   * Resolves true once Mania has its save file loaded (it asks Mania to load it), false
+   * if that failed or took longer than `timeoutMs`.
+   */
+  ready(timeoutMs?: number): Promise<boolean>;
+  /**
+   * Start a slot: an empty one is a new game with `character` (an index into
+   * {@link MANIA_CHARACTERS}), a saved one continues with its own. Mania writes the
+   * save and loads the stage; the pause is lifted. False when the save isn't ready.
+   */
+  start(slot: number, character?: number): boolean;
 }
 
 /**
@@ -192,6 +276,7 @@ export class Rsdkv5Play extends EnginePlayBase<Rsdkv5Payloads> {
   #module: Rsdkv5Module | null = null;
   #destroyed = false;
   #pauseOwner: string | null = null;
+  #muted = false;
 
   #canvas: HTMLCanvasElement | null = null;
   #ownsCanvas = false;
@@ -224,6 +309,43 @@ export class Rsdkv5Play extends EnginePlayBase<Rsdkv5Payloads> {
 
   get pausedBy(): string | null {
     return this.#pauseOwner;
+  }
+
+  /** Mania Mode's save slots — see {@link ManiaSaves}. */
+  get saves(): ManiaSaves {
+    const Module = this.#module;
+    const workDir = this.#workDir;
+    const available = !!Module?._web_mania_save_status && !!Module._web_mania_start_slot;
+    return {
+      available,
+      characters: available && Module?._web_mania_characters ? Module._web_mania_characters() : 4,
+      list: () => {
+        let bytes: Uint8Array | null = null;
+        try {
+          bytes = Module ? new Uint8Array(Module.FS.readFile(`${workDir}/SaveData.bin`)) : null;
+        } catch {
+          bytes = null; // no save file yet: eight empty slots
+        }
+        return parseManiaSaves(bytes);
+      },
+      ready: async (timeoutMs = 5000) => {
+        if (!available || !Module) return false;
+        const deadline = performance.now() + timeoutMs;
+        for (;;) {
+          const status = Module._web_mania_save_status!();
+          if (status === 200) return true;
+          if ((status !== 0 && status !== 100) || performance.now() > deadline) return false;
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+      },
+      start: (slot, character = 0) => {
+        if (!available || !Module) return false;
+        if (!Module._web_mania_start_slot!(slot | 0, character | 0)) return false;
+        // Whatever drove this is done with the engine: hand it back running.
+        if (this.#pauseOwner) this.resume(this.#pauseOwner);
+        return true;
+      },
+    };
   }
 
   /** RSDKv5's stage list, for a host that draws its own stage select. */
@@ -264,10 +386,26 @@ export class Rsdkv5Play extends EnginePlayBase<Rsdkv5Payloads> {
     const Module = this.#module;
     if (!Module || this.#pauseOwner !== owner) return;
     this.#pauseOwner = null;
-    void Module.SDL2?.audioContext?.resume();
+    if (!this.#muted) void Module.SDL2?.audioContext?.resume();
     Module.web_devmenu_set_paused?.(false);
     Module.resumeMainLoop?.();
     this.emit('resume', { owner });
+  }
+
+  /**
+   * Silence the game without stopping it (the frames keep running). A host uses it to
+   * let Mania get somewhere — load its save file — behind its own screen. Independent
+   * of {@link pause}: a paused game stays silent either way.
+   */
+  mute(muted = true): void {
+    this.#muted = muted;
+    const context = this.#module?.SDL2?.audioContext;
+    if (muted) void context?.suspend();
+    else if (!this.#pauseOwner) void context?.resume();
+  }
+
+  get muted(): boolean {
+    return this.#muted;
   }
 
   /** Copy the game's changed user files to OPFS `rsdkv5/<namespace>/`; emits `saves`. */
