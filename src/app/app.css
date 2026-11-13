@@ -1,0 +1,176 @@
+/* rsdkv5 app — load-game screen (craft's cards, as rsdkv4's app), boot screen and pause menu.
+   Tokens come from engine-specs (UI_TOKENS, `--wg-*`) when the host sets them; the
+   fallbacks are the same values, so the app looks right on a bare page too. */
+
+.rsdk-app {
+  --ring: var(--wg-focus-ring, 0 0 0 3px #fff);
+  --surface: var(--wg-surface, rgb(18 20 28 / 0.78));
+  --line: var(--wg-line, rgb(255 255 255 / 0.12));
+  --text: var(--wg-text, #f4f6fb);
+  --muted: var(--wg-muted, #8e97a9);
+  --danger: var(--wg-danger, #f87171);
+  --ui: var(--wg-font-ui, 'Inter Variable', 'Inter', system-ui, sans-serif);
+  --display: var(--wg-font-display, 'Unbounded Variable', 'Unbounded', system-ui, sans-serif);
+  --ease: var(--wg-ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+  color: var(--text);
+  font-family: var(--ui);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.rsdk-app * { box-sizing: border-box; }
+.rsdk-stage { position: absolute; inset: 0; display: grid; place-items: center; }
+.rsdk-stage canvas { outline: none; }
+.rsdk-overlay { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.rsdk-overlay > * { pointer-events: auto; }
+.rsdk-app[data-screen='game'] .rsdk-overlay { display: none; }
+
+/* Everything but the game sits on a backdrop that keeps the game visible underneath. */
+.rsdk-app:not([data-screen='game']) .rsdk-overlay {
+  background:
+    radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 70%),
+    rgb(4 6 12 / 0.72);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+.rsdk-app[data-screen='boot'] .rsdk-overlay { background-color: rgb(4 6 12 / 0.9); }
+
+.kicker { margin: 0; font: 600 0.72rem var(--ui); letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+.rsdk-app h2 { margin: 0; font: 700 clamp(1.4rem, 3vw, 2.1rem) var(--display); letter-spacing: -0.02em; }
+
+/* ---- boot ---- */
+.rsdk-boot { display: grid; justify-items: center; gap: 22px; }
+.rsdk-boot img { width: min(260px, 50vw); border-radius: 22px; box-shadow: 0 30px 80px -30px #000; animation: rsdk-breathe 2.4s var(--ease) infinite alternate; }
+.rsdk-boot p { margin: 0; color: var(--muted); font-weight: 500; }
+@keyframes rsdk-breathe { from { opacity: 0.55; transform: scale(0.98); } to { opacity: 1; transform: none; } }
+
+/* ---- load game: craft's slot cards (src/craft/views/GameLauncher.html) ---- */
+.rsdk-slots { width: min(1120px, 100%); padding: 0 clamp(16px, 4vw, 48px); display: grid; gap: clamp(22px, 4vh, 40px); }
+.rsdk-slots header { display: grid; gap: 6px; }
+.slot-cards {
+  --w: clamp(150px, 13vw, 190px);
+  display: flex; justify-content: center; align-items: flex-start; gap: clamp(12px, 1.6vw, 24px);
+}
+.slot-card {
+  flex: none; width: var(--w); height: calc(var(--w) * 220 / 170);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 0.4rem;
+  padding: 0.75rem; border-radius: 0.5rem; border: 2px solid #000; background: #333; color: #fff;
+  font-family: system-ui, sans-serif;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.slot-card.is-focused { box-shadow: var(--ring), 0 24px 50px -20px #000; transform: translateY(-4px); }
+.slot-card.is-nosave {
+  height: calc(var(--w) * 130 / 170); justify-content: center; align-items: center;
+  font-weight: 700; cursor: pointer;
+}
+.slot-card.is-nosave:hover:not(:active) { background: #222; }
+.slot-card img { display: block; }
+
+.slot-play {
+  all: unset; box-sizing: border-box; flex-shrink: 0; width: 100%; height: 34px; text-align: center;
+  border-radius: 4px; background: royalblue; color: #fff; font-weight: 700; text-shadow: 0 0 2px #000; cursor: pointer;
+}
+.slot-play:hover:not(:active), .slot-card.is-focused .slot-play { background: blue; }
+
+/* the character picker: white square, the character over two drifting colour bands */
+.player-choose {
+  all: unset; box-sizing: border-box; position: relative; width: 100%; aspect-ratio: 1; padding: 1rem 0.5rem 0;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  background: #fff; cursor: pointer; transition: padding 0.05s linear;
+}
+.player-choose::before, .player-choose::after { content: ''; position: absolute; inset: 0 1rem 0 3rem; background: rgb(180 180 180 / 0.2); }
+.player-choose[data-player='sonic']::after { background: rgb(13 122 233 / 0.2); left: 30%; right: 20%; }
+.player-choose[data-player='tails']::after { background: rgb(241 176 0 / 0.2); left: 40%; right: 10%; animation-delay: -5s; }
+.player-choose[data-player='knuckles']::after { background: rgb(255 20 0 / 0.2); left: 20%; right: 30%; animation-delay: -10s; }
+.player-choose[data-player='sonictails']::after { background: rgb(160 32 240 / 0.2); left: 20%; right: 70%; animation-delay: -15s; }
+.slot-card:hover .player-choose, .slot-card.is-focused .player-choose { padding: 0; }
+.player-choose:hover::before, .slot-card.is-focused .player-choose::before { animation: rsdk-player-bg 20s linear infinite; }
+.player-choose:hover::after, .slot-card.is-focused .player-choose::after { animation: rsdk-player-bg 30s linear reverse infinite; }
+.player-choose img { position: relative; z-index: 1; max-width: 100%; max-height: 100%; }
+@keyframes rsdk-player-bg {
+  0% { left: 30%; right: 20%; } 10% { left: 50%; right: 50%; } 20% { left: 10%; right: 20%; }
+  30% { left: 60%; right: 40%; } 40% { left: 70%; right: 10%; } 50% { left: 20%; right: 80%; }
+  60% { left: 0; right: 60%; } 70% { left: 40%; right: 10%; } 80% { left: 10%; right: 70%; }
+  90% { left: 80%; right: 0; } 100% { left: 30%; right: 20%; }
+}
+
+/* a saved slot */
+.slot-card.is-saved { gap: 0.25rem; }
+.stage-shot { position: relative; width: 100%; flex-shrink: 0; }
+.stage-badge {
+  width: 100%; aspect-ratio: 16 / 9; border-radius: 4px; overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.2); background: linear-gradient(160deg, #1b2a4a, #080d1c);
+}
+.stage-badge img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); image-rendering: pixelated; }
+.zone-tag {
+  position: absolute; top: 4px; left: 4px; padding: 1px 4px; border-radius: 3px; background: rgb(0 0 0 / 0.72);
+  color: #fbbf24; font-size: 0.5rem; font-weight: 800; letter-spacing: 0.06em; line-height: 1.4;
+}
+.player-icon { position: absolute; right: 0; bottom: -1rem; pointer-events: none; }
+.player-icon img { height: calc(var(--w) * 64 / 170); width: auto; filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.85)); }
+.zone-title {
+  height: 2.3em; padding-right: 26%; font-weight: 800; font-size: 0.72rem; color: #fbbf24; text-transform: uppercase;
+  letter-spacing: 0.4px; text-shadow: 0 1px 3px rgb(0 0 0 / 0.9); line-height: 1.15;
+}
+.emeralds { display: flex; justify-content: center; gap: 3px; flex-shrink: 0; }
+.emeralds i { width: 11px; height: 11px; background: var(--gem); clip-path: polygon(50% 0, 100% 38%, 50% 100%, 0 38%); opacity: 0.2; }
+.emeralds i.on { opacity: 1; filter: drop-shadow(0 0 3px rgb(255 255 255 / 0.4)); }
+.stats-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.2rem 0.4rem; font-size: 0.68rem; color: #e2e8f0; }
+.stats-grid span {
+  display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.1rem 0.3rem; border-radius: 3px;
+  background: rgb(0 0 0 / 0.4); border: 1px solid rgb(255 255 255 / 0.1); font-variant-numeric: tabular-nums;
+}
+.stats-grid svg { width: 10px; height: 10px; }
+
+/* Mania: no zone portraits here — the zone's name on a gradient; Mighty and Ray as badges */
+.slot-cards { --w: clamp(140px, 12vw, 190px); justify-content: flex-start; overflow-x: auto; padding: 16px 8px 18px; scrollbar-width: none; scroll-behavior: smooth; }
+.slot-cards::-webkit-scrollbar { display: none; }
+.stage-badge.is-mania { display: grid; place-items: end start; padding: 6px 10px; background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 70%, #0b1a3a), #080d1c); }
+.stage-badge.is-mania span { font: 900 clamp(1.1rem, 1.6vw, 1.5rem)/1 system-ui, sans-serif; letter-spacing: 0.06em; color: #fff; text-shadow: 0 2px 3px #000; }
+.slot-card .zone-title { padding-right: 34%; }
+.player-badge {
+  display: grid; place-items: center; width: 64%; aspect-ratio: 1; border-radius: 50%;
+  font: 900 2.4rem system-ui, sans-serif; color: #fff; text-shadow: 0 2px 4px rgb(0 0 0 / 0.6);
+  background: radial-gradient(circle at 35% 30%, #fff6, transparent 60%), var(--badge, #6b7280);
+}
+.player-badge[data-char='4'] { --badge: #dc2626; }
+.player-badge[data-char='5'] { --badge: #ca8a04; }
+.player-icon .player-badge { width: calc(var(--w) * 46 / 170); font-size: 1rem; }
+.player-choose[data-player='badge']::after { background: rgb(220 38 38 / 0.2); left: 25%; right: 25%; }
+.rsdk-app[data-screen='slots'] .rsdk-overlay { background-color: rgb(4 6 12 / 0.9); }
+
+/* ---- pause & confirm ---- */
+.rsdk-panel {
+  width: min(440px, 92vw); display: grid; gap: 10px; padding: 26px; border-radius: 28px;
+  background: rgb(20 22 31 / 0.9); border: 1px solid var(--line); box-shadow: 0 40px 100px -30px #000;
+}
+.rsdk-panel h2 { margin-bottom: 8px; }
+.rsdk-panel .text { margin: 0 0 8px; color: var(--muted); line-height: 1.5; }
+.item {
+  all: unset; box-sizing: border-box; display: grid; gap: 2px; padding: 13px 16px; border-radius: 14px;
+  background: rgb(255 255 255 / 0.05); font-weight: 600; cursor: pointer; transition: background 0.15s, box-shadow 0.15s;
+}
+.item small { font-weight: 500; font-size: 0.78rem; color: var(--muted); }
+.item.is-focused { background: #fff; color: #0b0d12; box-shadow: var(--ring); }
+.item.is-focused small { color: #4b5563; }
+.item.is-danger.is-focused { background: var(--danger); color: #1a0505; box-shadow: 0 0 0 3px var(--danger); }
+.rsdk-panel .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rsdk-panel .row .item { text-align: center; }
+.rsdk-confirm { position: absolute; inset: 0; display: grid; place-items: center; background: rgb(0 0 0 / 0.55); }
+
+/* ---- hints ---- */
+.rsdk-hints { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center; color: var(--muted); font-size: 0.78rem; font-weight: 500; }
+.rsdk-hints span { display: inline-flex; align-items: center; gap: 7px; }
+.rsdk-hints kbd { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; background: rgb(255 255 255 / 0.12); color: var(--text); font: 700 0.68rem var(--ui); }
+.rsdk-panel .rsdk-hints { justify-content: flex-start; margin-top: 6px; }
+
+@media (max-width: 960px) {
+  .slot-cards { justify-content: flex-start; overflow-x: auto; padding: 16px 6px 18px; margin: 0 -6px; scrollbar-width: none; scroll-snap-type: x mandatory; }
+  .slot-card { scroll-snap-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slot-card, .player-choose, .player-choose::before, .player-choose::after, .rsdk-boot img { transition: none; animation: none; }
+}

@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 292 292" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M136,36L136,37L145,37L145,36L136,36ZM133,37L133,38L136,38L136,37L133,37ZM131,38L131,39L133,39L133,38L131,38ZM131,39L130,39L130,40L131,40L131,39ZM130,40L129,40L129,41L130,41L130,40ZM129,41L128,41L128,42L129,42L129,41ZM128,42L127,42L127,43L128,43L128,42ZM127,43L126,43L126,45L127,45L127,43ZM126,45L125,45L125,47L126,47L126,45ZM125,47L124,47L124,49L125,49L125,47ZM124,49L123,49L123,52L124,52L124,49ZM123,52L122,52L122,56L123,56L123,52ZM122,56L121,56L121,66L122,66L122,56ZM123,66L122,66L122,70L123,70L123,66ZM124,70L123,70L123,72L124,72L124,73L125,73L125,71L124,71L124,70Z" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="156" y="43" width="1" height="1" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="141" y="47" width="1" height="1" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M145,50L144,50L144,52L143,52L143,54L144,54L144,55L145,55L145,50Z" style="fill:rgb(0,11,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="147" y="50" width="1" height="1" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M156,50L155,50L155,52L156,52L156,50ZM155,52L154,52L154,54L153,54L153,55L155,55L155,52Z" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="158" y="52" width="1" height="3" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M131,53L130,53L130,62L131,62L131,65L132,65L132,61L131,61L131,53ZM158,56L157,56L157,57L158,57L158,56ZM155,57L155,58L157,58L157,57L155,57ZM159,57L158,57L158,58L157,58L157,59L158,59L158,61L159,61L159,64L161,64L161,63L160,63L160,60L159,60L159,57ZM138,59L137,59L137,63L138,63L138,62L142,62L142,61L139,61L139,60L138,60L138,59ZM157,59L156,59L156,60L157,60L157,59ZM154,60L154,61L156,61L156,60L154,60ZM152,61L152,62L154,62L154,61L152,61ZM156,61L156,62L154,62L154,63L157,63L157,62L158,62L158,61L156,61ZM142,62L142,64L143,64L143,63L145,63L145,64L146,64L146,63L149,63L149,64L150,64L150,65L151,65L151,63L152,63L152,62L142,62ZM137,63L136,63L136,64L137,64L137,63ZM154,63L153,63L153,64L154,64L154,63ZM136,64L135,64L135,66L136,66L136,64ZM147,64L146,64L146,65L147,65L147,64ZM153,64L152,64L152,65L153,65L153,64ZM162,64L161,64L161,67L163,67L163,66L162,66L162,64ZM133,65L132,65L132,68L133,68L133,65ZM148,65L147,65L147,66L148,66L148,65ZM152,65L151,65L151,66L150,66L150,67L153,67L153,66L152,66L152,65ZM135,66L134,66L134,68L135,68L135,66ZM149,66L148,66L148,67L149,67L149,66ZM150,67L149,67L149,69L150,69L150,67ZM164,67L163,67L163,68L164,68L164,67ZM134,68L133,68L133,71L134,71L134,73L135,73L135,72L136,72L136,71L135,71L135,70L134,70L134,68ZM136,68L135,68L135,70L136,70L136,71L138,71L138,70L137,70L137,69L136,69L136,68ZM155,68L154,68L154,69L155,69L155,68ZM165,68L164,68L164,69L165,69L165,68ZM149,69L148,69L148,70L149,70L149,69ZM151,69L150,69L150,70L151,70L151,69ZM156,69L155,69L155,73L156,73L156,69ZM164,69L163,69L163,70L164,70L164,69ZM148,70L147,70L147,71L148,71L148,70ZM152,70L151,70L151,71L152,71L152,70ZM163,70L162,70L162,72L163,72L163,70ZM139,71L138,71L138,72L139,72L139,71ZM144,71L144,72L147,72L147,71L144,71ZM153,71L152,71L152,73L153,73L153,71ZM161,71L160,71L160,72L161,72L161,71ZM137,72L136,72L136,73L137,73L137,72ZM140,72L139,72L139,73L140,73L140,72ZM144,72L143,72L143,73L144,73L144,72ZM160,72L159,72L159,73L158,73L158,74L160,74L160,75L161,75L161,73L160,73L160,72ZM162,72L161,72L161,73L162,73L162,72ZM136,73L135,73L135,74L136,74L136,73ZM138,73L137,73L137,74L138,74L138,73ZM140,73L140,74L143,74L143,73L140,73ZM150,73L150,74L152,74L152,73L150,73ZM155,73L154,73L154,74L155,74L155,73ZM137,74L136,74L136,75L137,75L137,74ZM139,74L138,74L138,75L139,75L139,74ZM148,74L148,75L146,75L146,76L149,76L149,75L150,75L150,74L148,74ZM152,74L152,75L153,75L153,76L154,76L154,77L159,77L159,76L155,76L155,75L154,75L154,74L152,74ZM155,74L155,75L158,75L158,74L155,74ZM138,75L137,75L137,76L138,76L138,75ZM140,75L139,75L139,76L140,76L140,75ZM150,75L150,78L151,78L151,77L152,77L152,75L150,75ZM160,75L159,75L159,76L160,76L160,75ZM139,76L138,76L138,79L137,79L137,80L138,80L138,83L139,83L139,76ZM140,76L140,77L146,77L146,76L140,76ZM150,78L149,78L149,81L150,81L150,78ZM127,80L127,81L131,81L131,80L127,80ZM137,80L136,80L136,81L137,81L137,80ZM127,81L126,81L126,82L127,82L127,81ZM132,81L131,81L131,82L132,82L132,81ZM134,81L134,82L136,82L136,81L134,81ZM144,81L144,82L143,82L143,83L145,83L145,87L146,87L146,81L144,81ZM149,81L148,81L148,87L149,87L149,81ZM126,82L125,82L125,83L126,83L126,82ZM132,82L132,83L134,83L134,82L132,82ZM125,83L124,83L124,84L125,84L125,83ZM127,83L127,84L130,84L130,83L127,83ZM138,83L137,83L137,84L135,84L135,85L131,85L131,86L136,86L136,85L137,85L137,87L138,87L138,83ZM143,83L142,83L142,84L143,84L143,83ZM124,84L123,84L123,85L124,85L124,84ZM125,84L125,85L124,85L124,86L126,86L126,85L127,85L127,84L125,84ZM131,84L130,84L130,85L131,85L131,84ZM142,84L141,84L141,86L142,86L142,84ZM123,85L122,85L122,87L124,87L124,86L123,86L123,85ZM141,86L140,86L140,88L141,88L141,86ZM137,87L136,87L136,89L137,89L137,87ZM145,87L144,87L144,92L142,92L142,99L141,99L141,107L162,107L162,101L161,101L161,106L146,106L146,105L144,105L144,106L142,106L142,105L144,105L144,104L142,104L142,100L143,100L143,98L147,98L147,97L143,97L143,93L145,93L145,87ZM148,87L147,87L147,93L149,93L149,96L148,96L148,97L153,97L153,96L150,96L150,92L148,92L148,87ZM140,88L139,88L139,91L140,91L140,88ZM136,89L135,89L135,92L132,92L132,96L133,96L133,93L136,93L136,89ZM139,91L138,91L138,93L139,93L139,91ZM140,93L139,93L139,96L138,96L138,97L137,97L137,98L138,98L138,99L139,99L139,97L140,97L140,93ZM130,96L130,97L129,97L129,98L128,98L128,99L127,99L127,100L129,100L129,99L130,99L130,98L131,98L131,97L132,97L132,96L130,96ZM153,97L153,98L156,98L156,97L153,97ZM137,98L136,98L136,99L137,99L137,98ZM148,98L147,98L147,99L148,99L148,98ZM156,98L156,99L158,99L158,98L156,98ZM140,99L139,99L139,105L138,105L138,106L126,106L126,101L125,101L125,107L140,107L140,99ZM127,100L126,100L126,101L127,101L127,100Z" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="140" y="53" width="1" height="1" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M125,55L124,55L124,68L125,68L125,70L126,70L126,67L125,67L125,55ZM131,68L130,68L130,76L129,76L129,77L130,77L130,78L131,78L131,68ZM127,70L126,70L126,73L127,73L127,70ZM128,73L127,73L127,75L128,75L128,73ZM129,75L128,75L128,76L129,76L129,75Z" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="137" y="55" width="1" height="1" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="141" y="58" width="1" height="1" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="144" y="66" width="2" height="1" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="150" y="99" width="1" height="1" style="fill:rgb(0,11,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M134,93L133,93L133,97L135,97L135,94L134,94L134,93Z" style="fill:rgb(0,91,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M139,93L138,93L138,94L137,94L137,96L139,96L139,93Z" style="fill:rgb(0,91,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M144,93L143,93L143,97L146,97L146,94L144,94L144,93Z" style="fill:rgb(0,91,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="147" y="96" width="1" height="1" style="fill:rgb(0,91,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="146" y="65" width="1" height="1" style="fill:rgb(2,79,213);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="137" y="93" width="1" height="1" style="fill:rgb(2,147,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M144,93L144,94L146,94L146,95L147,95L147,96L148,96L148,95L149,95L149,94L147,94L147,93L144,93ZM147,96L146,96L146,97L147,97L147,96Z" style="fill:rgb(2,147,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="135" y="96" width="1" height="1" style="fill:rgb(2,147,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="137" y="96" width="1" height="1" style="fill:rgb(2,147,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="146" y="66" width="1" height="1" style="fill:rgb(3,35,143);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="153" y="67" width="1" height="1" style="fill:rgb(3,35,143);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M133,97L132,97L132,98L133,98L133,97ZM135,97L134,97L134,98L135,98L135,97ZM132,98L131,98L131,99L132,99L132,98ZM134,98L133,98L133,99L134,99L134,98Z" style="fill:rgb(3,35,143);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="98" width="3" height="1" style="fill:rgb(3,35,143);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M134,93L134,94L135,94L135,96L137,96L137,93L134,93Z" style="fill:rgb(39,223,13);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="93" width="1" height="1" style="fill:rgb(39,223,13);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="146" y="95" width="1" height="1" style="fill:rgb(39,223,13);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="140" y="52" width="1" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="157" y="57" width="1" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="137" y="63" width="1" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="143" y="63" width="1" height="2" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="65" width="1" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="135" y="66" width="1" height="2" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="133" y="71" width="1" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="147" y="97" width="2" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="151" y="97" width="1" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="135" y="98" width="1" height="2" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="151" y="99" width="2" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="126" y="105" width="1" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="137" y="105" width="1" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="142" y="105" width="2" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="146" y="105" width="6" height="1" style="fill:rgb(46,76,104);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="95" width="1" height="1" style="fill:rgb(59,168,63);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="155" y="42" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="156" y="44" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="140" y="47" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="143" y="54" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="151" y="61" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="146" y="63" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="63" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="151" y="72" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="139" y="76" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="149" y="77" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="137" y="82" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="142" y="82" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="99" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="152" y="104" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="104" width="1" height="1" style="fill:rgb(61,23,74);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="144" y="55" width="1" height="1" style="fill:rgb(95,68,1);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="155" y="59" width="1" height="1" style="fill:rgb(95,68,1);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="142" y="61" width="1" height="1" style="fill:rgb(95,68,1);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="134" y="65" width="1" height="1" style="fill:rgb(95,68,1);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="137" y="92" width="1" height="1" style="fill:rgb(95,68,1);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="145" y="98" width="1" height="1" style="fill:rgb(95,68,1);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="144" y="101" width="1" height="1" style="fill:rgb(95,68,1);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="142" y="103" width="1" height="1" style="fill:rgb(95,68,1);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="145" y="50" width="2" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="155" y="52" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M138,62L138,64L139,64L139,63L141,63L141,64L142,64L142,62L138,62Z" style="fill:rgb(101,140,194);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="63" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M159,63L158,63L158,64L159,64L159,63ZM159,64L159,66L160,66L160,67L161,67L161,64L159,64Z" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M137,64L136,64L136,68L137,68L137,64ZM137,68L137,70L140,70L140,69L139,69L139,68L137,68Z" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="143" y="65" width="1" height="2" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="145" y="65" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="149" y="65" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="67" width="1" height="2" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="150" y="67" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="162" y="67" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="146" y="68" width="1" height="2" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M152,69L151,69L151,70L152,70L152,69ZM153,70L152,70L152,71L153,71L153,70Z" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M161,70L160,70L160,71L161,71L161,70ZM162,71L161,71L161,72L162,72L162,71ZM161,72L160,72L160,73L161,73L161,72Z" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="140" y="71" width="4" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="72" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M157,72L156,72L156,73L157,73L157,72ZM158,73L157,73L157,74L158,74L158,73Z" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M153,73L152,73L152,74L153,74L153,73ZM150,74L150,75L152,75L152,74L150,74Z" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="136" y="97" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="152" y="98" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="133" y="99" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="127" y="105" width="3" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="136" y="105" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="152" y="105" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="105" width="3" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="160" y="105" width="1" height="1" style="fill:rgb(101,140,194);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="147" y="93" width="1" height="1" style="fill:rgb(102,230,85);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="136" y="96" width="1" height="1" style="fill:rgb(102,230,85);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="129" y="99" width="2" height="1" style="fill:rgb(110,109,83);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="138" y="104" width="1" height="1" style="fill:rgb(110,109,83);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M136,37L136,38L133,38L133,39L131,39L131,40L130,40L130,41L129,41L129,42L128,42L128,43L127,43L127,45L126,45L126,47L125,47L125,49L124,49L124,52L123,52L123,56L122,56L122,66L123,66L123,70L124,70L124,71L125,71L125,68L124,68L124,55L125,55L125,67L126,67L126,70L127,70L127,73L128,73L128,75L129,75L129,76L130,76L130,68L131,68L131,62L130,62L130,55L129,55L129,70L128,70L128,67L127,67L127,63L126,63L126,54L127,54L127,49L128,49L128,47L129,47L129,44L130,44L130,43L131,43L131,42L132,42L132,41L133,41L133,40L134,40L134,39L137,39L137,38L148,38L148,37L136,37ZM148,38L148,39L150,39L150,38L148,38ZM150,39L150,40L152,40L152,39L150,39ZM152,40L152,41L153,41L153,42L154,42L154,43L155,43L155,41L154,41L154,40L152,40ZM156,43L155,43L155,44L156,44L156,43Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M156,45L156,46L158,46L158,45L156,45ZM159,46L158,46L158,47L157,47L157,48L156,48L156,49L157,49L157,54L158,54L158,52L159,52L159,46ZM156,49L155,49L155,50L156,50L156,49Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M138,46L138,49L139,49L139,53L140,53L140,47L142,47L142,46L138,46ZM142,47L142,48L144,48L144,49L145,49L145,50L147,50L147,49L146,49L146,48L145,48L145,47L142,47ZM138,49L137,49L137,53L136,53L136,61L137,61L137,59L138,59L138,56L137,56L137,55L138,55L138,56L139,56L139,55L142,55L142,54L138,54L138,49Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M132,49L131,49L131,52L130,52L130,53L131,53L131,61L132,61L132,65L133,65L133,68L134,68L134,62L133,62L133,59L132,59L132,49Z" style="fill:rgb(116,0,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M153,50L152,50L152,54L151,54L151,53L150,53L150,55L153,55L153,54L154,54L154,53L153,53L153,50ZM149,51L148,51L148,52L149,52L149,51ZM150,52L149,52L149,53L150,53L150,52Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M156,55L156,56L158,56L158,57L159,57L159,55L156,55Z" style="fill:rgb(116,0,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="140" y="57" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M143,58L142,58L142,59L143,59L143,58ZM143,59L143,60L145,60L145,59L143,59Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="139" y="60" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M156,60L156,61L158,61L158,60L156,60ZM154,61L154,62L156,62L156,61L154,61ZM152,62L152,63L151,63L151,65L152,65L152,64L153,64L153,63L154,63L154,62L152,62Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M148,63L147,63L147,65L149,65L149,64L148,64L148,63Z" style="fill:rgb(116,0,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="149" y="69" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M136,70L135,70L135,71L136,71L136,70ZM136,71L136,72L137,72L137,73L138,73L138,74L139,74L139,75L140,75L140,73L139,73L139,72L138,72L138,71L136,71ZM150,71L150,72L149,72L149,73L148,73L148,74L150,74L150,73L151,73L151,72L152,72L152,71L150,71ZM136,72L135,72L135,73L136,73L136,72ZM137,73L136,73L136,74L137,74L137,73ZM138,74L137,74L137,75L138,75L138,74ZM146,74L146,75L148,75L148,74L146,74ZM139,75L138,75L138,76L139,76L139,75ZM140,75L140,76L146,76L146,75L140,75ZM147,76L146,76L146,77L147,77L147,76ZM139,77L139,83L140,83L140,80L141,80L141,78L146,78L146,77L139,77ZM139,83L138,83L138,85L139,85L139,83Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="147" y="71" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M145,72L144,72L144,73L145,73L145,72ZM144,73L143,73L143,74L144,74L144,73Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M155,74L154,74L154,75L155,75L155,74ZM158,74L158,75L155,75L155,76L159,76L159,75L160,75L160,74L158,74Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M150,75L149,75L149,76L148,76L148,77L150,77L150,75Z" style="fill:rgb(116,0,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M149,79L148,79L148,80L146,80L146,87L145,87L145,93L147,93L147,87L148,87L148,81L149,81L149,79Z" style="fill:rgb(116,0,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M138,80L137,80L137,81L136,81L136,82L134,82L134,83L132,83L132,84L131,84L131,85L135,85L135,84L137,84L137,82L138,82L138,80ZM131,81L130,81L130,82L131,82L131,81ZM132,82L131,82L131,83L132,83L132,82Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="143" y="81" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M126,82L126,83L125,83L125,84L127,84L127,83L129,83L129,82L126,82ZM125,84L124,84L124,85L125,85L125,84ZM124,85L123,85L123,86L124,86L124,85Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="141" y="83" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="140" y="85" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="136" y="89" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="138" y="89" width="1" height="2" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="136" y="92" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M144,98L143,98L143,100L142,100L142,103L143,103L143,104L144,104L144,105L145,105L145,102L144,102L144,98Z" style="fill:rgb(116,0,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="138" y="99" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M157,99L157,100L160,100L160,99L157,99ZM161,100L160,100L160,101L161,101L161,100Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M136,100L135,100L135,101L136,101L136,100ZM127,101L126,101L126,105L138,105L138,102L137,102L137,103L136,103L136,104L128,104L128,103L127,103L127,101ZM137,101L136,101L136,102L137,102L137,101Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M154,100L153,100L153,101L154,101L154,100ZM153,101L152,101L152,102L153,102L153,101ZM152,102L151,102L151,105L152,105L152,104L153,104L153,105L154,105L154,104L155,104L155,103L152,103L152,102ZM155,104L155,105L161,105L161,104L155,104Z" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="156" y="101" width="1" height="1" style="fill:rgb(116,0,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M157,54L156,54L156,55L157,55L157,54ZM156,55L155,55L155,56L156,56L156,55Z" style="fill:rgb(152,65,82);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="138" y="59" width="1" height="1" style="fill:rgb(152,65,82);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="157" y="59" width="1" height="1" style="fill:rgb(152,65,82);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="140" y="60" width="1" height="1" style="fill:rgb(152,65,82);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="153" y="60" width="1" height="1" style="fill:rgb(152,65,82);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="134" y="69" width="1" height="1" style="fill:rgb(152,65,82);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="147" y="73" width="1" height="1" style="fill:rgb(152,65,82);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="147" y="76" width="1" height="1" style="fill:rgb(152,65,82);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="155" y="99" width="2" height="1" style="fill:rgb(152,65,82);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M140,48L140,49L143,49L143,50L145,50L145,49L144,49L144,48L140,48Z" style="fill:rgb(154,174,225);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M148,51L147,51L147,52L148,52L148,51ZM149,52L148,52L148,53L149,53L149,52ZM150,53L149,53L149,54L150,54L150,53Z" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="155" y="53" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="156" y="58" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M159,61L158,61L158,62L159,62L159,61ZM158,62L157,62L157,64L158,64L158,62ZM159,64L158,64L158,65L159,65L159,64Z" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M145,63L144,63L144,64L145,64L145,63ZM146,64L145,64L145,65L146,65L146,64Z" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="149" y="64" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="153" y="64" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M138,67L137,67L137,68L138,68L138,67ZM137,68L136,68L136,69L137,69L137,68Z" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M148,68L147,68L147,70L148,70L148,68ZM144,69L144,70L143,70L143,71L147,71L147,70L146,70L146,69L144,69Z" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="150" y="68" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M163,68L162,68L162,69L161,69L161,71L162,71L162,70L163,70L163,68Z" style="fill:rgb(154,174,225);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M138,70L138,71L139,71L139,72L140,72L140,71L141,71L141,70L138,70ZM140,72L140,73L143,73L143,72L140,72Z" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="153" y="71" width="2" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M157,71L156,71L156,72L157,72L157,71ZM158,71L158,72L157,72L157,73L159,73L159,72L160,72L160,71L158,71ZM155,73L155,74L157,74L157,73L155,73Z" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="153" y="73" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="132" y="96" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M151,97L150,97L150,98L151,98L151,97ZM152,98L151,98L151,99L152,99L152,98Z" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="130" y="98" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="98" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="130" y="105" width="6" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="153" y="105" width="1" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="157" y="105" width="3" height="1" style="fill:rgb(154,174,225);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="143" y="51" width="1" height="1" style="fill:rgb(156,99,210);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="131" y="99" width="2" height="1" style="fill:rgb(156,99,210);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="134" y="99" width="1" height="1" style="fill:rgb(156,99,210);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="146" y="61" width="1" height="1" style="fill:rgb(162,132,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="136" y="99" width="1" height="1" style="fill:rgb(162,132,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="149" y="99" width="1" height="1" style="fill:rgb(162,132,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M146,103L146,105L151,105L151,104L150,104L150,103L146,103Z" style="fill:rgb(162,132,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M143,49L142,49L142,50L143,50L143,49ZM144,50L143,50L143,51L144,51L144,50Z" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="156" y="49" width="1" height="1" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="158" y="62" width="1" height="1" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M151,65L150,65L150,66L151,66L151,65ZM150,66L149,66L149,67L150,67L150,66Z" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="152" y="65" width="1" height="1" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="161" y="67" width="1" height="2" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="163" y="68" width="1" height="1" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="153" y="72" width="1" height="1" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M132,97L131,97L131,98L132,98L132,97ZM133,98L132,98L132,99L133,99L133,98Z" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="149" y="97" width="1" height="1" style="fill:rgb(167,227,191);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="141" y="55" width="1" height="1" style="fill:rgb(193,137,150);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="55" width="1" height="1" style="fill:rgb(193,137,150);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="155" y="58" width="1" height="1" style="fill:rgb(193,137,150);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="144" y="61" width="1" height="1" style="fill:rgb(193,137,150);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="149" y="61" width="1" height="1" style="fill:rgb(193,137,150);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M145,41L144,41L144,42L145,42L145,41ZM146,42L145,42L145,43L146,43L146,42Z" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="155" y="48" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="50" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="129" y="54" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="157" y="54" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M137,62L136,62L136,63L137,63L137,62ZM136,63L135,63L135,64L136,64L136,63Z" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="134" y="68" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="78" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="144" y="80" width="2" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="127" y="81" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="139" y="87" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="144" y="98" width="1" height="2" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="152" y="100" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="160" y="103" width="1" height="1" style="fill:rgb(205,52,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="137" y="98" width="1" height="1" style="fill:rgb(233,225,16);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M147,98L146,98L146,101L147,101L147,102L150,102L150,103L151,103L151,101L152,101L152,100L148,100L148,99L147,99L147,98Z" style="fill:rgb(233,225,16);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="137" y="101" width="1" height="1" style="fill:rgb(233,225,16);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M137,38L137,39L134,39L134,40L133,40L133,41L132,41L132,42L131,42L131,43L130,43L130,44L129,44L129,47L128,47L128,49L127,49L127,54L126,54L126,63L127,63L127,67L128,67L128,70L129,70L129,54L130,54L130,52L131,52L131,49L132,49L132,59L133,59L133,62L134,62L134,65L135,65L135,63L136,63L136,62L137,62L137,61L136,61L136,53L137,53L137,49L138,49L138,46L142,46L142,45L139,45L139,44L143,44L143,45L145,45L145,46L147,46L147,47L148,47L148,48L149,48L149,49L147,49L147,50L148,50L148,51L149,51L149,52L150,52L150,53L151,53L151,54L152,54L152,50L153,50L153,53L154,53L154,52L155,52L155,51L154,51L154,48L155,48L155,47L156,47L156,48L157,48L157,47L158,47L158,46L156,46L156,44L155,44L155,43L154,43L154,42L153,42L153,41L152,41L152,40L150,40L150,39L148,39L148,38L137,38ZM144,41L147,41L147,42L148,42L148,41L149,41L149,42L150,42L150,43L151,43L151,45L150,45L150,46L148,46L148,45L147,45L147,44L146,44L146,43L145,43L145,42L144,42L144,41ZM142,46L142,47L144,47L144,46L142,46ZM145,47L145,48L146,48L146,49L147,49L147,47L145,47ZM139,49L138,49L138,54L140,54L140,53L139,53L139,49Z" style="fill:rgb(237,0,22);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M148,70L148,72L145,72L145,73L144,73L144,74L140,74L140,75L146,75L146,74L147,74L147,73L149,73L149,72L150,72L150,71L151,71L151,70L148,70Z" style="fill:rgb(237,0,22);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M146,77L146,78L141,78L141,80L140,80L140,83L139,83L139,85L138,85L138,87L137,87L137,90L136,90L136,92L138,92L138,89L139,89L139,87L140,87L140,85L141,85L141,83L142,83L142,82L143,82L143,81L144,81L144,80L148,80L148,78L149,78L149,77L146,77Z" style="fill:rgb(237,0,22);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M128,81L128,82L129,82L129,83L130,83L130,84L132,84L132,83L131,83L131,82L130,82L130,81L128,81Z" style="fill:rgb(237,0,22);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M127,100L127,103L128,103L128,104L136,104L136,103L137,103L137,102L136,102L136,101L135,101L135,100L127,100ZM131,101L133,101L133,102L131,102L131,101Z" style="fill:rgb(237,0,22);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M154,100L154,101L153,101L153,102L152,102L152,103L155,103L155,104L160,104L160,103L161,103L161,101L160,101L160,100L154,100ZM156,101L159,101L159,102L156,102L156,101Z" style="fill:rgb(237,0,22);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M145,41L145,42L146,42L146,43L147,43L147,45L149,45L149,46L150,46L150,45L151,45L151,44L150,44L150,43L148,43L148,42L147,42L147,41L145,41Z" style="fill:rgb(238,107,29);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="140" y="44" width="1" height="1" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="142" y="44" width="1" height="2" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="144" y="45" width="1" height="2" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="48" width="1" height="1" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="48" width="1" height="1" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M139,55L139,56L141,56L141,55L139,55ZM139,56L138,56L138,59L139,59L139,56ZM140,59L139,59L139,60L140,60L140,59Z" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="142" y="55" width="2" height="1" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="55" width="2" height="1" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M155,58L154,58L154,59L152,59L152,60L141,60L141,61L143,61L143,62L144,62L144,61L145,61L145,62L146,62L146,61L147,61L147,62L149,62L149,61L150,61L150,62L151,62L151,61L153,61L153,60L155,60L155,58Z" style="fill:rgb(238,107,29);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M146,99L145,99L145,100L146,100L146,99ZM145,100L144,100L144,101L145,101L145,100Z" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="138" y="102" width="1" height="2" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="145" y="102" width="1" height="3" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="147" y="102" width="1" height="1" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="150" y="103" width="1" height="1" style="fill:rgb(238,107,29);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M150,55L150,56L139,56L139,59L140,59L140,60L143,60L143,59L141,59L141,58L140,58L140,57L141,57L141,58L143,58L143,59L145,59L145,60L152,60L152,59L154,59L154,58L155,58L155,57L157,57L157,56L154,56L154,55L150,55ZM148,58L150,58L150,59L148,59L148,58Z" style="fill:rgb(242,180,130);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="58" width="2" height="1" style="fill:rgb(252,167,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M138,99L137,99L137,100L136,100L136,101L138,101L138,102L139,102L139,100L138,100L138,99Z" style="fill:rgb(252,167,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="99" width="1" height="1" style="fill:rgb(252,167,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M146,100L145,100L145,102L146,102L146,103L147,103L147,101L146,101L146,100Z" style="fill:rgb(252,167,0);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="102" width="2" height="1" style="fill:rgb(252,167,0);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="151" y="101" width="1" height="1" style="fill:rgb(253,253,114);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M140,49L140,52L141,52L141,54L142,54L142,55L143,55L143,50L142,50L142,49L140,49Z" style="fill:rgb(254,254,255);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M157,50L156,50L156,54L157,54L157,50ZM156,54L155,54L155,55L156,55L156,54Z" style="fill:rgb(254,254,255);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M145,51L145,56L148,56L148,55L150,55L150,54L149,54L149,53L148,53L148,52L147,52L147,51L145,51Z" style="fill:rgb(254,254,255);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M139,63L139,64L137,64L137,67L138,67L138,68L139,68L139,69L140,69L140,70L141,70L141,71L143,71L143,70L144,70L144,69L146,69L146,68L148,68L148,66L147,66L147,67L143,67L143,64L141,64L141,63L139,63Z" style="fill:rgb(254,254,255);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M155,63L155,64L154,64L154,65L153,65L153,67L154,67L154,68L155,68L155,69L156,69L156,71L157,71L157,72L158,72L158,71L160,71L160,70L161,70L161,67L160,67L160,66L159,66L159,65L158,65L158,64L157,64L157,63L155,63ZM151,67L151,69L152,69L152,70L153,70L153,71L155,71L155,69L154,69L154,68L153,68L153,67L151,67Z" style="fill:rgb(254,254,255);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="144" y="64" width="1" height="2" style="fill:rgb(254,254,255);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M134,97L133,97L133,98L134,98L134,97ZM136,97L135,97L135,98L136,98L136,97ZM135,98L134,98L134,99L135,99L135,98Z" style="fill:rgb(254,254,255);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M153,97L152,97L152,98L153,98L153,97ZM154,98L153,98L153,100L154,100L154,98Z" style="fill:rgb(254,254,255);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="155" y="98" width="1" height="1" style="fill:rgb(254,254,255);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="131" y="101" width="2" height="1" style="fill:rgb(254,254,255);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="157" y="101" width="2" height="1" style="fill:rgb(254,254,255);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M149,41L148,41L148,43L150,43L150,42L149,42L149,41ZM151,43L150,43L150,44L151,44L151,43Z" style="fill:rgb(255,60,122);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="146" y="43" width="1" height="1" style="fill:rgb(255,60,122);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="139" y="44" width="1" height="1" style="fill:rgb(255,60,122);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="141" y="44" width="1" height="1" style="fill:rgb(255,60,122);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="143" y="45" width="1" height="1" style="fill:rgb(255,60,122);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="148" y="45" width="1" height="1" style="fill:rgb(255,60,122);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <path d="M145,46L145,47L147,47L147,46L145,46ZM148,47L147,47L147,49L148,49L148,47Z" style="fill:rgb(255,60,122);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="155" y="47" width="1" height="1" style="fill:rgb(255,60,122);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,-434,-136)">
+        <rect x="154" y="49" width="1" height="1" style="fill:rgb(255,60,122);"/>
+    </g>
+</svg>
