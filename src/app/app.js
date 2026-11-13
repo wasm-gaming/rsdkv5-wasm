@@ -11,8 +11,7 @@
 // game) only Select+Start and Escape come through, as `menu`.
 //
 // Unlike rsdkv4's app there is no load-game screen: Sonic Mania's menus are game
-// code, with no native bridge to start a save (see RECORD/). Nor does this build
-// expose the stage list yet, so the pause menu offers no game screens until it does.
+// code, with no native bridge to start a save (see RECORD/).
 //
 // Plain JS and DOM on purpose: the app ships inside the engine's package next to the
 // SDK and loads from a static server, so it imports nothing but the SDK.

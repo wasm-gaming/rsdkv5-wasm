@@ -61,8 +61,8 @@ Escape opens the pause menu: *Continuar*, the game's own screens found in the st
 screen, main menu, level select — only those the data has) and *Volver al lanzador* (asks first).
 There is no load-game screen like rsdkv4's yet: that needs a native bridge (see `RECORD/`).
 
-This build does not expose the stage list yet, so Mania's pause menu has only *Continuar* and
-*Volver al lanzador*. `pause()` freezes the game by stopping emscripten's main loop.
+`pause()` freezes the game by stopping emscripten's main loop. The stage list comes from the
+build's own bridge (`web_devmenu_*` in `scripts/build.sh`).
 
 ## Saves live in the engine's own folder
 

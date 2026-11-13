@@ -493,8 +493,90 @@ target_link_options(RetroEngine PRIVATE
     -sINVOKE_RUN=0
     -sEXPORTED_RUNTIME_METHODS=[FS,callMain,ccall,cwrap]
     -sEXPORTED_FUNCTIONS=[_main]
+    # embind, for WebDevMenu.cpp's web_devmenu_* (the SDK's devMenu bridge)
+    --bind
 )
 EOF
+
+echo "Adding WebDevMenu.cpp (the SDK's devMenu bridge: stage list + stage load)..."
+# The SDK has always called Module.web_devmenu_get_stage_list / _load_stage; without this
+# file they did not exist, getStageList() returned [] and the app had no game screens.
+# Same JSON shape as rsdkv3/rsdkv4. Pausing is done from JS (pauseMainLoop), so there
+# is no web_devmenu_set_paused here.
+cat << 'WEBMENU_EOF' > "$RSDK_DIR/RSDKv5/RSDK/Dev/WebDevMenu.cpp"
+#include "RSDK/Core/RetroEngine.hpp"
+#include <emscripten/bind.h>
+#include <sstream>
+#include <string>
+
+using namespace RSDK;
+
+namespace
+{
+std::string jsonEscape(const char *s, size_t max)
+{
+    std::string out;
+    for (size_t i = 0; i < max && s[i]; ++i) {
+        unsigned char c = (unsigned char)s[i];
+        if (c == '"' || c == '\\')
+            out += '\\';
+        if (c < 0x20)
+            continue;
+        out += (char)c;
+    }
+    return out;
+}
+} // namespace
+
+std::string web_devmenu_get_stage_list()
+{
+    std::ostringstream json;
+    json << "[";
+    for (int c = 0; sceneInfo.listCategory && c < sceneInfo.categoryCount; ++c) {
+        SceneListInfo *list = &sceneInfo.listCategory[c];
+        if (c > 0)
+            json << ",";
+        json << "{\"name\":\"" << jsonEscape(list->name, sizeof(list->name)) << "\",\"stages\":[";
+        for (int i = 0; sceneInfo.listData && i < list->sceneCount; ++i) {
+            SceneListEntry *entry = &sceneInfo.listData[list->sceneOffsetStart + i];
+            if (i > 0)
+                json << ",";
+            json << "{\"name\":\"" << jsonEscape(entry->name, sizeof(entry->name)) << "\"}";
+        }
+        json << "]}";
+    }
+    json << "]";
+    return json.str();
+}
+
+// What the engine's own dev menu does when a scene is picked (Dev/Debug.cpp).
+void web_devmenu_load_stage(int category, int index)
+{
+    if (!sceneInfo.listCategory || category < 0 || category >= sceneInfo.categoryCount)
+        return;
+    SceneListInfo *list = &sceneInfo.listCategory[category];
+    if (index < 0 || index >= list->sceneCount)
+        return;
+    sceneInfo.activeCategory = category;
+    sceneInfo.listPos        = list->sceneOffsetStart + index;
+    sceneInfo.state          = ENGINESTATE_LOAD;
+}
+
+EMSCRIPTEN_BINDINGS(web_devmenu)
+{
+    emscripten::function("web_devmenu_get_stage_list", &web_devmenu_get_stage_list);
+    emscripten::function("web_devmenu_load_stage", &web_devmenu_load_stage);
+}
+WEBMENU_EOF
+python3 - "$RSDK_DIR/CMakeLists.txt" <<'PYEOF'
+import sys
+path = sys.argv[1]
+content = open(path, encoding="utf-8").read()
+anchor = "    RSDKv5/RSDK/Dev/Debug.cpp\n"
+assert content.count(anchor) == 1, "CMakeLists.txt: expected one Dev/Debug.cpp source line"
+content = content.replace(anchor, anchor + "    RSDKv5/RSDK/Dev/WebDevMenu.cpp\n", 1)
+open(path, "w", encoding="utf-8").write(content)
+PYEOF
 
 echo "Configuring + building (emcmake cmake, GAME_STATIC=ON, output name rsdkv5)..."
 # -DRETRO_OUTPUT_NAME=rsdkv5 renames the emitted RSDKv5U.{js,wasm,data} triple at
