@@ -28,7 +28,7 @@ const OWNER = 'app';
 export const GAME_SCREENS = [
   { match: /^TITLE( SCREEN)?$/i, label: 'Pantalla de título' },
   { match: /^(MAIN MENU|MENU|SAVE SELECT|STAGE MENU)$/i, label: 'Menú del juego' },
-  { match: /^LEVEL SELECT$/i, label: 'Level select' },
+  { match: /^(LEVEL|STAGE) SELECT$/i, label: 'Level select' }, // Sonic CD: STAGE SELECT
 ];
 
 /** `[{ label, list, scene }]` for the GAME_SCREENS found in a devMenu stage list. */

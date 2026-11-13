@@ -32,6 +32,14 @@ test('screens the data does not have are not offered', () => {
   assert.deepEqual(findGameScreens([{ name: 'Broken' }, { stages: [{}] }]), []);
 });
 
+test("Sonic CD's STAGE SELECT is the level select", () => {
+  assert.deepEqual(findGameScreens([list('Presentation Stages', 'TITLE SCREEN', 'MENU', 'TIME ATTACK', 'STAGE SELECT')]), [
+    { label: 'Pantalla de título', list: 0, scene: 0 },
+    { label: 'Menú del juego', list: 0, scene: 1 },
+    { label: 'Level select', list: 0, scene: 3 },
+  ]);
+});
+
 test('a name only partly matching is not taken for a screen', () => {
   assert.deepEqual(findGameScreens([list('Presentation', 'TITLE CARD', 'MENU BG', 'LEVEL SELECT 2')]), []);
 });
