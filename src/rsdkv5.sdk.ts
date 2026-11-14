@@ -196,8 +196,8 @@ export function storagePath(
 }
 
 /**
- * Player 1's keyboard in the generated `Settings.ini` (`[Keyboard Map 1]`): arrows, Z/X/C
- * for buttons A/B/C, A/S/D for X/Y/Z, Enter = Start, Tab = Select. Windows virtual-key
+ * Player 1's keyboard in the generated `Settings.ini` (`[Keyboard Map 1]`): arrows, A/S/D
+ * for buttons A/B/C, Z/X/C for X/Y/Z, Enter = Start, Tab = Select. Windows virtual-key
  * codes, which is what RSDKv5's input layer maps from.
  */
 export const KEYBOARD_MAP_1 = {
@@ -205,12 +205,12 @@ export const KEYBOARD_MAP_1 = {
   down: 0x28,
   left: 0x25,
   right: 0x27,
-  buttonA: 0x5a, // Z
-  buttonB: 0x58, // X
-  buttonC: 0x43, // C
-  buttonX: 0x41, // A
-  buttonY: 0x53, // S
-  buttonZ: 0x44, // D
+  buttonA: 0x41, // A
+  buttonB: 0x53, // S
+  buttonC: 0x44, // D
+  buttonX: 0x5a, // Z
+  buttonY: 0x58, // X
+  buttonZ: 0x43, // C
   start: 0x0d, // Enter
   select: 0x09, // Tab
 } as const;
@@ -249,8 +249,8 @@ export function buildSettingsIni(config: Rsdkv5Config): string {
     'streamVolume=0.8',
     'sfxVolume=1.0',
     '',
-    // Player 1's keys, as the RSDKv4/v3 Sonics have them: Z/X/C jump (RSDKv5's own
-    // defaults are A/S/D). Values are the Windows virtual-key codes RSDKv5 reads.
+    // Player 1's keys, the same in the three Sonics: A/S/D = A/B/C (RSDKv5's own default),
+    // Z/X/C = X/Y/Z (instead of Q/W/E). Values are the Windows virtual-key codes RSDKv5 reads.
     '[Keyboard Map 1]',
     ...Object.entries(KEYBOARD_MAP_1).map(([key, vk]) => `${key}=0x${vk.toString(16)}`),
     '',
