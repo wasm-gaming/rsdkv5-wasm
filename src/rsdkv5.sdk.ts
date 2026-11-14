@@ -196,6 +196,26 @@ export function storagePath(
 }
 
 /**
+ * Player 1's keyboard in the generated `Settings.ini` (`[Keyboard Map 1]`): arrows, Z/X/C
+ * for buttons A/B/C, A/S/D for X/Y/Z, Enter = Start, Tab = Select. Windows virtual-key
+ * codes, which is what RSDKv5's input layer maps from.
+ */
+export const KEYBOARD_MAP_1 = {
+  up: 0x26,
+  down: 0x28,
+  left: 0x25,
+  right: 0x27,
+  buttonA: 0x5a, // Z
+  buttonB: 0x58, // X
+  buttonC: 0x43, // C
+  buttonX: 0x41, // A
+  buttonY: 0x53, // S
+  buttonZ: 0x44, // D
+  start: 0x0d, // Enter
+  select: 0x09, // Tab
+} as const;
+
+/**
  * Serialise the engine config into RSDKv5U's `Settings.ini` (capital S — the engine
  * opens exactly that name, and the Emscripten FS is case-sensitive). The v5 dialect:
  * lowercase keys, 0/1 booleans, `dataFile=` naming the pack relative to the working dir.
@@ -228,6 +248,11 @@ export function buildSettingsIni(config: Rsdkv5Config): string {
     'streamsEnabled=1',
     'streamVolume=0.8',
     'sfxVolume=1.0',
+    '',
+    // Player 1's keys, as the RSDKv4/v3 Sonics have them: Z/X/C jump (RSDKv5's own
+    // defaults are A/S/D). Values are the Windows virtual-key codes RSDKv5 reads.
+    '[Keyboard Map 1]',
+    ...Object.entries(KEYBOARD_MAP_1).map(([key, vk]) => `${key}=0x${vk.toString(16)}`),
     '',
   ].join('\n');
 }
