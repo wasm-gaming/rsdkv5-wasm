@@ -50,7 +50,7 @@
 /* ---- load game: craft's slot cards (src/craft/views/GameLauncher.html) ---- */
 .rsdk-slots { width: min(1120px, 100%); padding: 0 clamp(16px, 4vw, 48px); display: grid; gap: clamp(22px, 4vh, 40px); }
 .rsdk-slots header { display: grid; gap: 6px; }
-.slot-cards {
+.slot-cards { isolation: isolate; /* the art's z-index stays inside the row */
   --w: clamp(150px, 13vw, 190px);
   display: flex; justify-content: center; align-items: flex-start; gap: clamp(12px, 1.6vw, 24px);
 }
@@ -159,7 +159,23 @@
 .item.is-danger.is-focused { background: var(--danger); color: #1a0505; box-shadow: 0 0 0 3px var(--danger); }
 .rsdk-panel .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rsdk-panel .row .item { text-align: center; }
-.rsdk-confirm { position: absolute; inset: 0; display: grid; place-items: center; background: rgb(0 0 0 / 0.55); }
+/* A dialog sits on its own layer, above anything the screen under it positions (the
+   character art on the slot cards is z-index 1), on a backdrop that hides that screen. */
+.rsdk-confirm {
+  position: absolute; inset: 0; z-index: 10; display: grid; place-items: center;
+  background: rgb(4 6 12 / 0.78);
+  backdrop-filter: blur(10px) saturate(0.8);
+  -webkit-backdrop-filter: blur(10px) saturate(0.8);
+}
+.rsdk-confirm h2 { font-size: clamp(1.15rem, 2.2vw, 1.55rem); line-height: 1.2; }
+.rsdk-confirm .rsdk-panel {
+  width: min(500px, 92vw);
+  background:
+    radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+    #151821;
+  border-color: rgb(255 255 255 / 0.14);
+  box-shadow: 0 40px 120px -20px #000, 0 0 0 1px rgb(0 0 0 / 0.4);
+}
 
 /* ---- hints ---- */
 .rsdk-hints { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center; color: var(--muted); font-size: 0.78rem; font-weight: 500; }

@@ -1,7 +1,6 @@
 // rsdkv5's own app: what a host gets when it mounts this engine instead of driving
-// the SDK itself — a load-game screen (craft's cards, as rsdkv4's app, on Mania's
-// eight save slots), the game, and a pause menu, on the wasm-gaming usability scheme
-// (engine-specs UX.md).
+// the SDK itself — the game with Mania's own menus and a pause menu, on the wasm-gaming
+// usability scheme (engine-specs UX.md); optionally a load-game screen of its own.
 //
 //   import * as app from '<engines>/rsdkv5/app/app.js'
 //   const handle = await app.mount(target, host)   // EngineApp.mount
@@ -11,7 +10,10 @@
 // input is the host's createInput(): resumed it delivers menu actions; suspended (in
 // game) only Select+Start and Escape come through, as `menu`.
 //
-// The slots come from the SDK's `saves` (SaveData.bin read directly; a slot started
+// By default the app boots straight into the game, with Mania's own title and menus —
+// its save select is where slots are chosen (and deleted, and Encore, Time Attack…).
+// With `host.options.loadGame = 'app'` it shows its own slot screen first instead:
+// the slots come from the SDK's `saves` (SaveData.bin read directly; a slot started
 // through the build's bridge, which replays Mania's own save-select action, so Mania
 // writes its file itself). Mania only loads its save once a scene with SaveGame is
 // up, so the game keeps running — muted — behind the slot screen until it has, then
@@ -111,6 +113,8 @@ export async function mount(target, host) {
     confirm: null, // { title, text, yes, no, onYes, onNo, focus, under }
   };
   let saveReady = null; // Promise<boolean>, once asked
+  /** The app's slot screen instead of Mania's own save select: only when the host asks. */
+  const useSlotScreen = host.options?.loadGame === 'app';
 
   let play = null;
   let leaving = false;
@@ -322,7 +326,7 @@ export async function mount(target, host) {
       focus: 0,
       items: [
         { label: 'Continuar', run: closePause },
-        ...(play?.saves.available
+        ...(useSlotScreen && play?.saves.available
           ? [{ label: 'Cambiar de partida', hint: 'vuelve a las partidas guardadas', run: () => showSlots('pause') }]
           : []),
         ...gameScreens().map((screen) => ({
@@ -504,8 +508,10 @@ export async function mount(target, host) {
       play = null;
       return handle;
     }
-    if (!play.saves.available) {
-      enterGame(); // an older wasm: the game with its own menus (phase A)
+    // Mania's own menus by default: its save select does more than this app's (delete,
+    // Encore, Time Attack…). A host can still ask for the app's slot screen.
+    if (!useSlotScreen || !play.saves.available) {
+      enterGame();
       return handle;
     }
     state.characters = play.saves.characters;
