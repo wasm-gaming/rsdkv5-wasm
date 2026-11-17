@@ -19,9 +19,9 @@ test('screens are found by name, in any list, trimmed and case-insensitive', () 
     list('Bonus', 'MENU'),
   ];
   assert.deepEqual(findGameScreens(lists), [
-    { label: 'Pantalla de título', list: 0, scene: 0 },
-    { label: 'Menú del juego', list: 3, scene: 0 },
-    { label: 'Level select', list: 0, scene: 1 },
+    { key: 'titleScreen', list: 0, scene: 0 },
+    { key: 'gameMenu', list: 3, scene: 0 },
+    { key: 'levelSelect', list: 0, scene: 1 },
   ]);
 });
 
@@ -34,9 +34,9 @@ test('screens the data does not have are not offered', () => {
 
 test("Sonic CD's STAGE SELECT is the level select", () => {
   assert.deepEqual(findGameScreens([list('Presentation Stages', 'TITLE SCREEN', 'MENU', 'TIME ATTACK', 'STAGE SELECT')]), [
-    { label: 'Pantalla de título', list: 0, scene: 0 },
-    { label: 'Menú del juego', list: 0, scene: 1 },
-    { label: 'Level select', list: 0, scene: 3 },
+    { key: 'titleScreen', list: 0, scene: 0 },
+    { key: 'gameMenu', list: 0, scene: 1 },
+    { key: 'levelSelect', list: 0, scene: 3 },
   ]);
 });
 
