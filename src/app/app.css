@@ -181,6 +181,7 @@
 .rsdk-hints { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center; color: var(--muted); font-size: 0.78rem; font-weight: 500; }
 .rsdk-hints span { display: inline-flex; align-items: center; gap: 7px; }
 .rsdk-hints kbd { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; background: rgb(255 255 255 / 0.12); color: var(--text); font: 700 0.68rem var(--ui); }
+.rsdk-hints kbd.key { margin-left: -4px; background: none; border: 1px solid rgb(255 255 255 / 0.22); color: var(--muted); }
 .rsdk-panel .rsdk-hints { justify-content: flex-start; margin-top: 6px; }
 
 @media (max-width: 960px) {
