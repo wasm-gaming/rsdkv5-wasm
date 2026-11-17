@@ -16,6 +16,8 @@ export type Rsdkv5Asset =
 
 /** The engine, written into the generated `Settings.ini`. Fixed for the life of the wasm. */
 export interface Rsdkv5Config {
+  /** How the picture is scaled up: crisp pixels (the default) or the browser's smoothing. Live. */
+  renderFilter?: 'pixelated' | 'smooth';
   /** Sonic Mania's native dev menu. A host draws its own from `play.devMenu`. */
   devMenu?: boolean;
   vsync?: boolean;
@@ -72,6 +74,18 @@ export const RSDKV5_VIDEO = { width: 424, height: 240, aspect: '16:9' } as const
 
 export const RSDKV5_SPEC: EngineSpec<Rsdkv5Payloads> = {
   config: {
+    renderFilter: {
+      default: 'pixelated',
+      enum: ['pixelated', 'smooth'],
+      live: true,
+      description: "Scaling: crisp pixels or the browser's smoothing (CSS image-rendering on the canvas).",
+      label: { en: 'Smoothing', es: 'Suavizado' },
+      group: 'video',
+      valueLabels: [
+        { en: 'Sharp pixels', es: 'Píxeles nítidos' },
+        { en: 'Smooth', es: 'Suavizado' },
+      ],
+    },
     devMenu: {
       default: false,
       live: false,
