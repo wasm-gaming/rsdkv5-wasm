@@ -31,6 +31,9 @@ import {
   createSettingsScreen,
   createWakeLock,
   loadSettings,
+  menuKeyAliases,
+  menuKeyHint,
+  PAD_BUTTON_NAMES,
   resolveLocale,
   saveSettings,
   settingsDefaults,
@@ -200,8 +203,15 @@ export async function mount(target, host) {
 
   // ---- screens ------------------------------------------------------------------
 
+  // A pad button in a hint shows the key bound to it next to it ("B" "S"), when that key
+  // works in the menus too (menuControls / menuKeyAliases, engine-specs 0.6.2).
+  const keyOf = (k) => {
+    const button = PAD_BUTTON_NAMES.indexOf(k);
+    const key = button >= 0 ? menuKeyHint(menuControls(), button) : '';
+    return key && key !== k ? `<kbd class="key">${esc(key)}</kbd>` : '';
+  };
   const hints = (pairs) =>
-    `<footer class="rsdk-hints">${pairs.map(([k, t]) => `<span><kbd>${k}</kbd>${t}</span>`).join('')}</footer>`;
+    `<footer class="rsdk-hints">${pairs.map(([k, t]) => `<span><kbd>${k}</kbd>${keyOf(k)}${t}</span>`).join('')}</footer>`;
 
   const render = () => {
     if (destroyed) return;
@@ -486,6 +496,11 @@ export async function mount(target, host) {
   // Only the config's labelled rows are settings: the pack's GAME OPTIONS stay in the game.
   const described = async () => ({ ...(await play.config()), ...SHARED_SETTINGS });
   const controlRows = () => controlsModel(BUTTONS, DEFAULT_CONTROLS, saved.controls, locale);
+  /** The engine's buttons: the player's key, and the pad button the menus read it as (the default). */
+  const menuControls = () =>
+    Object.entries(DEFAULT_CONTROLS).map(([id, d]) => ({ code: saved.controls[id]?.code ?? d.code, button: d.button }));
+  /** The keys bound to the pad's menu buttons work in the menus too (the launcher's input). */
+  const applyMenuKeys = () => host.input.setKeyAliases?.(menuKeyAliases(menuControls()));
 
   const openSettings = async () => {
     const all = await described();
@@ -509,6 +524,7 @@ export async function mount(target, host) {
       onControl(_id, _binding, bindings) {
         saved.controls = bindings;
         play.setControls(toControls(bindings));
+        applyMenuKeys();
         void store();
       },
       onReset() {
@@ -516,6 +532,7 @@ export async function mount(target, host) {
         saved = { version: 1, values: {}, controls: {} };
         play.config(Object.fromEntries(Object.entries(defaults).filter(([key]) => !(key in SHARED_SETTINGS))));
         play.setControls({});
+        applyMenuKeys();
         applyShared();
         void store();
         screen.update(settingsModel(all, defaults, locale), controlRows());
@@ -619,6 +636,7 @@ export async function mount(target, host) {
 
   const handle = {
     async unmount() {
+      host.input.setKeyAliases?.({});
       destroyed = true;
       leaving = true;
       off();
@@ -666,6 +684,7 @@ export async function mount(target, host) {
       return handle;
     }
     play.setControls(toControls({ ...DEFAULT_CONTROLS, ...saved.controls }));
+    applyMenuKeys();
     applyShared();
     // Mania's own menus by default: its save select does more than this app's (delete,
     // Encore, Time Attack…). A host can still ask for the app's slot screen.
