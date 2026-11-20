@@ -586,6 +586,21 @@ content = content.replace(anchor, anchor + "    RSDKv5/RSDK/Dev/WebDevMenu.cpp\n
 open(path, "w", encoding="utf-8").write(content)
 PYEOF
 
+echo "Dropping SDL_INIT_HAPTIC (and SDL_INIT_EVERYTHING) — Emscripten's SDL2 has no haptic..."
+# SDL2InputDevice.cpp starts JOYSTICK | GAMECONTROLLER | HAPTIC in one SDL_InitSubSystem.
+# Emscripten's SDL2 port is built without haptic, so that call fails, and its
+# quit_and_error path quits the joystick it had just started -- and with it the
+# gamepadconnected handlers: the engine never sees a pad, in game or later
+# (RECORD/2026-11-20.gamepad-lost-at-sdl-init.WIP.md). Rumble is not used on the web.
+# Any SDL_INIT_HAPTIC or SDL_INIT_EVERYTHING left in the engine fails the build.
+grep -rl --include='*.cpp' --include='*.hpp' --include='*.h' --include='*.c' -e 'SDL_INIT_HAPTIC' -e 'SDL_INIT_EVERYTHING' "$RSDK_DIR/RSDKv5" \
+  | xargs -r sed -i -e 's/ *| *SDL_INIT_HAPTIC//g' \
+      -e 's/SDL_INIT_EVERYTHING/SDL_INIT_TIMER | SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER/g'
+if grep -rn --include='*.cpp' --include='*.hpp' --include='*.h' --include='*.c' -e 'SDL_INIT_HAPTIC' -e 'SDL_INIT_EVERYTHING' "$RSDK_DIR/RSDKv5"; then
+  echo "error: SDL is still asked for haptic (it drops the gamepad)" >&2
+  exit 1
+fi
+
 echo "Configuring + building (emcmake cmake, GAME_STATIC=ON, output name rsdkv5)..."
 # -DRETRO_OUTPUT_NAME=rsdkv5 renames the emitted RSDKv5U.{js,wasm,data} triple at
 # the source: the JS glue hardcodes its .wasm/.data siblings' names, so renaming
